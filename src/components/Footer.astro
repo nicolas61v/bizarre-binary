@@ -8,7 +8,11 @@ const year = new Date().getFullYear();
         <div class="footer__inner container">
             <div class="footer__brand">
                 <a href="/" class="footer__logo">
-                    <span class="footer__logo-icon">✦</span>
+                    <img
+                        src="/imgs/logocirculo.png"
+                        alt="Dejavu Estudios Logo"
+                        class="footer__logo-img"
+                    />
                     <span class="footer__logo-text"
                         >Dejavu <span class="gold-gradient-text">Estudios</span
                         ></span
@@ -91,9 +95,10 @@ const year = new Date().getFullYear();
         margin-bottom: 0.75rem;
     }
 
-    .footer__logo-icon {
-        color: var(--gold-300);
-        font-size: 1rem;
+    .footer__logo-img {
+        height: 40px;
+        width: auto;
+        border-radius: 50%;
         filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.3));
     }
 
