@@ -158,12 +158,12 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-auto-rows: 200px;
-        gap: 1rem;
+        gap: 1.25rem;
     }
 
     .gallery__item {
         position: relative;
-        border-radius: 16px;
+        border-radius: 20px; /* Increased from 16px */
         overflow: hidden;
         cursor: pointer;
     }
@@ -176,11 +176,11 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.7s var(--ease-out-expo);
+        transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1); /* Slower animation */
     }
 
     .gallery__item:hover img {
-        transform: scale(1.08);
+        transform: scale(1.1);
     }
 
     .gallery__item-overlay {
@@ -189,13 +189,13 @@
         background: linear-gradient(
             180deg,
             transparent 50%,
-            rgba(10, 10, 10, 0.75) 100%
+            rgba(10, 10, 10, 0.8) 100%
         );
         display: flex;
         align-items: flex-end;
         padding: 1.25rem;
         opacity: 0;
-        transition: opacity 0.5s var(--ease-out-expo);
+        transition: opacity 0.8s ease; /* Slower fade */
     }
 
     .gallery__item:hover .gallery__item-overlay {
@@ -218,14 +218,14 @@
     .gallery__item-border {
         position: absolute;
         inset: 0;
-        border-radius: 16px;
+        border-radius: 20px;
         border: 1px solid rgba(255, 255, 255, 0.1);
         pointer-events: none;
-        transition: border-color 0.5s var(--ease-out-expo);
+        transition: border-color 0.8s ease;
     }
 
     .gallery__item:hover .gallery__item-border {
-        border-color: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.3);
     }
 
     /* Responsive */
@@ -240,6 +240,10 @@
         .gallery__grid {
             grid-template-columns: 1fr 1fr;
             grid-auto-rows: 180px;
+            gap: 0.75rem;
         }
+        /* Mobile adjustment for overlay visibility if desired, 
+           but user didn't explicitly ask for this one to be auto-revealed, 
+           only Benefits. Keeping hover for now or it's fine. */
     }
 </style>

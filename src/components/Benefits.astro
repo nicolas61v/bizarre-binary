@@ -220,6 +220,38 @@
     </div>
 </section>
 
+<script>
+    // Mobile auto-reveal text when in center of viewport
+    document.addEventListener("DOMContentLoaded", () => {
+        const cards = document.querySelectorAll(".benefits__card");
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add(
+                                "benefits__card--active",
+                            );
+                        } else {
+                            entry.target.classList.remove(
+                                "benefits__card--active",
+                            );
+                        }
+                    });
+                },
+                {
+                    root: null,
+                    threshold: 0.6, // Trigger when 60% visible
+                    rootMargin: "-10% 0px -10% 0px", // Focus on the middle of screen
+                },
+            );
+
+            cards.forEach((card) => observer.observe(card));
+        }
+    });
+</script>
+
 <style>
     .benefits {
         padding: var(--section-padding) 0;
@@ -252,16 +284,17 @@
     .benefits__grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 1.25rem;
+        gap: 1.5rem;
     }
 
     /* Card */
     .benefits__card {
         position: relative;
-        border-radius: 20px;
+        border-radius: 24px; /* More rounded as requested */
         overflow: hidden;
         cursor: pointer;
         aspect-ratio: 4 / 3;
+        isolation: isolate;
     }
 
     .benefits__card--large {
@@ -273,11 +306,13 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1); /* SLOWER animation */
     }
 
-    .benefits__card:hover img {
-        transform: scale(1.08);
+    /* Zoom on active/hover */
+    .benefits__card:hover img,
+    .benefits__card.benefits__card--active img {
+        transform: scale(1.12);
     }
 
     /* Fog effect */
@@ -287,20 +322,21 @@
         background:
             radial-gradient(
                 ellipse 100% 80% at 50% 100%,
-                rgba(10, 10, 10, 0.8) 0%,
-                transparent 60%
+                rgba(10, 10, 10, 0.9) 0%,
+                transparent 70%
             ),
             radial-gradient(
                 ellipse 60% 40% at 20% 80%,
-                rgba(212, 175, 55, 0.08) 0%,
+                rgba(212, 175, 55, 0.15) 0%,
                 transparent 50%
             );
         pointer-events: none;
-        opacity: 0.8;
-        transition: opacity 0.8s ease;
+        opacity: 0.6;
+        transition: opacity 1.5s ease;
     }
 
-    .benefits__card:hover .benefits__card-fog {
+    .benefits__card:hover .benefits__card-fog,
+    .benefits__card.benefits__card--active .benefits__card-fog {
         opacity: 1;
     }
 
@@ -310,20 +346,25 @@
         inset: 0;
         background: linear-gradient(
             0deg,
-            rgba(10, 10, 10, 0.85) 0%,
-            rgba(10, 10, 10, 0.2) 40%,
-            transparent 70%
+            rgba(10, 10, 10, 0.95) 0%,
+            rgba(10, 10, 10, 0.5) 40%,
+            transparent 80%
         );
         pointer-events: none;
-        transition: background 0.8s ease;
+        opacity: 0.6;
+        transition:
+            opacity 1s ease,
+            background 1s ease;
     }
 
-    .benefits__card:hover .benefits__card-overlay {
+    .benefits__card:hover .benefits__card-overlay,
+    .benefits__card.benefits__card--active .benefits__card-overlay {
+        opacity: 1;
         background: linear-gradient(
             0deg,
-            rgba(10, 10, 10, 0.9) 0%,
-            rgba(10, 10, 10, 0.3) 50%,
-            transparent 80%
+            rgba(10, 10, 10, 0.95) 10%,
+            rgba(10, 10, 10, 0.6) 50%,
+            transparent 90%
         );
     }
 
@@ -331,85 +372,113 @@
     .benefits__card-border {
         position: absolute;
         inset: 0;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
         pointer-events: none;
-        transition: border-color 0.6s ease;
+        transition: border-color 1s ease;
+        z-index: 2;
     }
 
-    .benefits__card:hover .benefits__card-border {
-        border-color: rgba(255, 255, 255, 0.25);
+    .benefits__card:hover .benefits__card-border,
+    .benefits__card.benefits__card--active .benefits__card-border {
+        border-color: rgba(255, 255, 255, 0.4);
     }
 
-    /* Content */
+    /* Content - HIDDEN INITIALLY */
     .benefits__card-content {
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 1.75rem;
-        z-index: 1;
-        transform: translateY(8px);
-        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        padding: 2.5rem;
+        z-index: 3;
+        transform: translateY(20px);
+        opacity: 0;
+        transition:
+            transform 1.2s cubic-bezier(0.19, 1, 0.22, 1),
+            opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1);
     }
 
-    .benefits__card:hover .benefits__card-content {
+    /* Reveal on hover/active */
+    .benefits__card:hover .benefits__card-content,
+    .benefits__card.benefits__card--active .benefits__card-content {
         transform: translateY(0);
+        opacity: 1;
     }
 
     .benefits__card-icon {
-        width: 42px;
-        height: 42px;
+        width: 48px;
+        height: 48px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 10px;
-        background: rgba(212, 175, 55, 0.12);
-        border: 1px solid rgba(212, 175, 55, 0.2);
+        border-radius: 12px;
+        background: rgba(212, 175, 55, 0.1);
+        border: 1px solid rgba(212, 175, 55, 0.3);
         color: var(--gold-300);
-        margin-bottom: 0.75rem;
+        margin-bottom: 1rem;
         backdrop-filter: blur(8px);
-        transition: all 0.6s ease;
+        transition: all 1s ease;
     }
 
-    .benefits__card:hover .benefits__card-icon {
-        background: rgba(212, 175, 55, 0.2);
-        box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+    .benefits__card:hover .benefits__card-icon,
+    .benefits__card.benefits__card--active .benefits__card-icon {
+        background: rgba(212, 175, 55, 0.25);
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        border-color: var(--gold-400);
     }
 
     .benefits__card-title {
         font-family: var(--font-display);
-        font-size: 1.15rem;
+        font-size: 1.4rem;
         font-weight: 600;
         color: var(--white);
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     }
 
     .benefits__card-text {
-        font-size: 0.82rem;
-        color: var(--silver-200);
+        font-size: 0.95rem;
+        color: var(--silver-100);
         font-weight: 300;
         letter-spacing: 0.02em;
+        line-height: 1.6;
+        max-width: 90%;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     /* Responsive */
+    @media (max-width: 900px) {
+        .benefits__grid {
+            gap: 1rem;
+        }
+        .benefits__card-content {
+            padding: 1.5rem;
+        }
+    }
+
     @media (max-width: 700px) {
         .benefits__grid {
             grid-template-columns: 1fr;
-            gap: 1rem;
+            gap: 1.5rem;
         }
         .benefits__card {
-            aspect-ratio: 16 / 10;
+            aspect-ratio: 16 / 12; /* Slightly taller on mobile */
         }
         .benefits__card--large {
             grid-column: 1;
-            aspect-ratio: 16 / 10;
+            aspect-ratio: 16 / 12;
         }
+
+        /* On mobile, standard state might be slightly visible or fully handled by JS */
         .benefits__card-content {
-            padding: 1.25rem;
+            padding: 1.5rem;
+            /* On very small screens, maybe show a hint? 
+         But JS will handle the full reveal. */
         }
+
         .benefits__card-title {
-            font-size: 1.05rem;
+            font-size: 1.2rem;
         }
     }
 </style>
