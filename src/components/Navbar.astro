@@ -1,0 +1,285 @@
+---
+/* Navbar — Glassmorphism fixed navigation */
+---
+
+<nav class="navbar" id="navbar">
+    <div class="navbar__inner container">
+        <!-- Logo -->
+        <a href="/" class="navbar__logo">
+            <span class="navbar__logo-icon">✦</span>
+            <span class="navbar__logo-text"
+                >Bizarre<span class="navbar__logo-accent">Binary</span></span
+            >
+        </a>
+
+        <!-- Desktop Links -->
+        <ul class="navbar__links" id="nav-links">
+            <li><a href="#inicio" class="navbar__link">Inicio</a></li>
+            <li><a href="#modelos" class="navbar__link">Modelos</a></li>
+            <li><a href="#servicios" class="navbar__link">Servicios</a></li>
+            <li><a href="#contacto" class="navbar__link">Contacto</a></li>
+        </ul>
+
+        <!-- CTA -->
+        <a href="#contacto" class="navbar__cta">Únete</a>
+
+        <!-- Hamburger (Mobile) -->
+        <button
+            class="navbar__hamburger"
+            id="hamburger"
+            aria-label="Abrir menú"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="navbar__mobile-menu" id="mobile-menu">
+        <ul class="navbar__mobile-links">
+            <li><a href="#inicio" class="navbar__link">Inicio</a></li>
+            <li><a href="#modelos" class="navbar__link">Modelos</a></li>
+            <li><a href="#servicios" class="navbar__link">Servicios</a></li>
+            <li><a href="#contacto" class="navbar__link">Contacto</a></li>
+            <li>
+                <a href="#contacto" class="navbar__cta navbar__cta--mobile"
+                    >Únete</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const navbar = document.getElementById("navbar");
+
+    hamburger?.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        mobileMenu?.classList.toggle("open");
+    });
+
+    // Close menu on link click
+    mobileMenu?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+            hamburger?.classList.remove("active");
+            mobileMenu?.classList.remove("open");
+        });
+    });
+
+    // Navbar background on scroll
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+            navbar?.classList.add("scrolled");
+        } else {
+            navbar?.classList.remove("scrolled");
+        }
+    });
+</script>
+
+<style>
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        transition:
+            background var(--transition-base),
+            border-color var(--transition-base);
+        border-bottom: 1px solid transparent;
+    }
+
+    .navbar.scrolled {
+        background: rgba(10, 10, 10, 0.75);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    .navbar__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 72px;
+    }
+
+    /* Logo */
+    .navbar__logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--white);
+        letter-spacing: 0.02em;
+        transition: opacity var(--transition-base);
+    }
+
+    .navbar__logo:hover {
+        opacity: 0.85;
+    }
+
+    .navbar__logo-icon {
+        font-size: 1.2rem;
+        color: var(--gold-300);
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+    }
+
+    .navbar__logo-accent {
+        background: linear-gradient(135deg, var(--gold-300), var(--gold-400));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Desktop Links */
+    .navbar__links {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+    }
+
+    .navbar__link {
+        font-size: 0.875rem;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--gray-light);
+        position: relative;
+        padding: 0.25rem 0;
+        transition: color var(--transition-base);
+    }
+
+    .navbar__link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1.5px;
+        background: linear-gradient(90deg, var(--gold-300), var(--gold-400));
+        transition: width var(--transition-base);
+    }
+
+    .navbar__link:hover {
+        color: var(--gold-300);
+    }
+
+    .navbar__link:hover::after {
+        width: 100%;
+    }
+
+    /* CTA Button */
+    .navbar__cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.6rem 1.75rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--black);
+        background: linear-gradient(
+            135deg,
+            var(--gold-300) 0%,
+            var(--gold-400) 100%
+        );
+        border-radius: 50px;
+        transition:
+            transform var(--transition-base),
+            box-shadow var(--transition-base);
+    }
+
+    .navbar__cta:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
+    }
+
+    /* Hamburger */
+    .navbar__hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        padding: 0.5rem;
+        z-index: 1001;
+    }
+
+    .navbar__hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--gold-300);
+        border-radius: 2px;
+        transition:
+            transform var(--transition-base),
+            opacity var(--transition-base);
+    }
+
+    .navbar__hamburger.active span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+    .navbar__hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    .navbar__hamburger.active span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile Menu */
+    .navbar__mobile-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-slow);
+        z-index: 999;
+    }
+
+    .navbar__mobile-menu.open {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .navbar__mobile-links {
+        list-style: none;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .navbar__mobile-links .navbar__link {
+        font-size: 1.5rem;
+        letter-spacing: 0.15em;
+    }
+
+    .navbar__cta--mobile {
+        margin-top: 1rem;
+        padding: 0.9rem 2.5rem;
+        font-size: 0.9rem;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+        .navbar__links,
+        .navbar__cta:not(.navbar__cta--mobile) {
+            display: none;
+        }
+        .navbar__hamburger {
+            display: flex;
+        }
+    }
+</style>

@@ -1,0 +1,179 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = "Bizarre Binary — Studio de Modelaje Webcam",
+	description = "Estudio profesional de modelaje webcam. Eleva tu presencia digital con el respaldo de expertos. Únete a Bizarre Binary.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	/* ═══════════════════════════════════════════
+     DESIGN TOKENS
+  ═══════════════════════════════════════════ */
+	:root {
+		/* Gold palette */
+		--gold-50: #fff9e6;
+		--gold-100: #ffefb3;
+		--gold-200: #ffe680;
+		--gold-300: #ffd700;
+		--gold-400: #d4af37;
+		--gold-500: #b8962e;
+		--gold-600: #9a7d25;
+
+		/* Neutrals */
+		--black: #0a0a0a;
+		--black-light: #1a1a1a;
+		--black-medium: #2a2a2a;
+		--gray-dark: #3a3a3a;
+		--gray: #6b6b6b;
+		--gray-light: #a0a0a0;
+		--white: #ffffff;
+		--white-soft: #f5f5f5;
+		--white-muted: #e0e0e0;
+
+		/* Glass properties */
+		--glass-bg: rgba(10, 10, 10, 0.45);
+		--glass-bg-light: rgba(255, 255, 255, 0.05);
+		--glass-border: rgba(212, 175, 55, 0.25);
+		--glass-blur: 16px;
+
+		/* Typography */
+		--font-display: "Playfair Display", Georgia, serif;
+		--font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+		/* Spacing */
+		--section-padding: clamp(3rem, 8vw, 6rem);
+		--container-max: 1200px;
+
+		/* Transitions */
+		--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+		--transition-base: 0.3s var(--ease-out-expo);
+		--transition-slow: 0.6s var(--ease-out-expo);
+	}
+
+	/* ═══════════════════════════════════════════
+     RESET & BASE
+  ═══════════════════════════════════════════ */
+	*,
+	*::before,
+	*::after {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	html,
+	body {
+		width: 100%;
+		min-height: 100%;
+		overflow-x: hidden;
+	}
+
+	body {
+		background-color: var(--black);
+		color: var(--white-soft);
+		font-family: var(--font-body);
+		font-weight: 300;
+		line-height: 1.7;
+		letter-spacing: 0.01em;
+	}
+
+	img {
+		max-width: 100%;
+		display: block;
+	}
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	button {
+		font-family: inherit;
+		cursor: pointer;
+		border: none;
+		background: none;
+	}
+
+	/* ═══════════════════════════════════════════
+     UTILITY CLASSES
+  ═══════════════════════════════════════════ */
+	.container {
+		width: 100%;
+		max-width: var(--container-max);
+		margin: 0 auto;
+		padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+	}
+
+	.glass {
+		background: var(--glass-bg);
+		backdrop-filter: blur(var(--glass-blur));
+		-webkit-backdrop-filter: blur(var(--glass-blur));
+		border: 1px solid var(--glass-border);
+		border-radius: 16px;
+	}
+
+	.gold-gradient-text {
+		background: linear-gradient(
+			135deg,
+			var(--gold-300) 0%,
+			var(--gold-400) 50%,
+			var(--gold-200) 100%
+		);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	/* Selection */
+	::selection {
+		background: rgba(212, 175, 55, 0.3);
+		color: var(--white);
+	}
+
+	/* Scrollbar */
+	::-webkit-scrollbar {
+		width: 6px;
+	}
+	::-webkit-scrollbar-track {
+		background: var(--black);
+	}
+	::-webkit-scrollbar-thumb {
+		background: var(--gold-400);
+		border-radius: 3px;
+	}
+</style>
