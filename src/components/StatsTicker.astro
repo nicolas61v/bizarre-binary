@@ -1,0 +1,165 @@
+---
+/* StatsTicker — Infinite scrolling marquee with key metrics */
+---
+
+<section class="stats" aria-label="Estadísticas">
+    <div class="stats__track">
+        <div class="stats__slide">
+            <div class="stats__item">
+                <span class="stats__number">+200</span>
+                <span class="stats__label">Modelos Activas</span>
+            </div>
+            <div class="stats__divider">✦</div>
+            <div class="stats__item">
+                <span class="stats__number">98%</span>
+                <span class="stats__label">Satisfacción</span>
+            </div>
+            <div class="stats__divider">✦</div>
+            <div class="stats__item">
+                <span class="stats__number">3x</span>
+                <span class="stats__label">Más Ingresos</span>
+            </div>
+            <div class="stats__divider">✦</div>
+            <div class="stats__item">
+                <span class="stats__number">24/7</span>
+                <span class="stats__label">Soporte</span>
+            </div>
+            <div class="stats__divider">✦</div>
+            <div class="stats__item">
+                <span class="stats__number">+5</span>
+                <span class="stats__label">Años de Experiencia</span>
+            </div>
+            <div class="stats__divider">✦</div>
+            <div class="stats__item">
+                <span class="stats__number">Top 1%</span>
+                <span class="stats__label">Plataformas</span>
+            </div>
+            <div class="stats__divider">✦</div>
+        </div>
+        <!-- Duplicate for seamless loop -->
+        <div class="stats__slide" aria-hidden="true">
+            <div class="stats__item">
+                <span class="stats__number">+200</span>
+                <span class="stats__label">Modelos Activas</span>
+            </div>
+            <div class="stats__divider">✦</div>
+            <div class="stats__item">
+                <span class="stats__number">98%</span>
+                <span class="stats__label">Satisfacción</span>
+            </div>
+            <div class="stats__divider">✦</div>
+            <div class="stats__item">
+                <span class="stats__number">3x</span>
+                <span class="stats__label">Más Ingresos</span>
+            </div>
+            <div class="stats__divider">✦</div>
+            <div class="stats__item">
+                <span class="stats__number">24/7</span>
+                <span class="stats__label">Soporte</span>
+            </div>
+            <div class="stats__divider">✦</div>
+            <div class="stats__item">
+                <span class="stats__number">+5</span>
+                <span class="stats__label">Años de Experiencia</span>
+            </div>
+            <div class="stats__divider">✦</div>
+            <div class="stats__item">
+                <span class="stats__number">Top 1%</span>
+                <span class="stats__label">Plataformas</span>
+            </div>
+            <div class="stats__divider">✦</div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .stats {
+        position: relative;
+        overflow: hidden;
+        padding: 2rem 0;
+        border-top: 1px solid rgba(212, 175, 55, 0.1);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        background: linear-gradient(
+            180deg,
+            rgba(212, 175, 55, 0.03) 0%,
+            transparent 100%
+        );
+    }
+
+    /* Fade edges */
+    .stats::before,
+    .stats::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 120px;
+        z-index: 2;
+        pointer-events: none;
+    }
+    .stats::before {
+        left: 0;
+        background: linear-gradient(90deg, var(--black) 0%, transparent 100%);
+    }
+    .stats::after {
+        right: 0;
+        background: linear-gradient(270deg, var(--black) 0%, transparent 100%);
+    }
+
+    .stats__track {
+        display: flex;
+        width: max-content;
+        animation: marquee 30s linear infinite;
+    }
+
+    .stats__track:hover {
+        animation-play-state: paused;
+    }
+
+    .stats__slide {
+        display: flex;
+        align-items: center;
+        gap: 2.5rem;
+        padding: 0 1.25rem;
+    }
+
+    .stats__item {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+        white-space: nowrap;
+    }
+
+    .stats__number {
+        font-family: var(--font-display);
+        font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--gold-300), var(--gold-400));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .stats__label {
+        font-size: 0.75rem;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--silver-300);
+    }
+
+    .stats__divider {
+        color: var(--gold-400);
+        opacity: 0.3;
+        font-size: 0.6rem;
+    }
+
+    @keyframes marquee {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+</style>

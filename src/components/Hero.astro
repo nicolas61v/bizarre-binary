@@ -1,5 +1,5 @@
 ---
-/* Hero — Full viewport with CSS bokeh background, gold particles, and glassmorphism card */
+/* Hero — Split layout with image, enhanced animations, gold particles */
 ---
 
 <section class="hero" id="inicio">
@@ -11,8 +11,6 @@
         <div class="hero__bokeh hero__bokeh--3"></div>
         <div class="hero__bokeh hero__bokeh--4"></div>
         <div class="hero__bokeh hero__bokeh--5"></div>
-        <div class="hero__bokeh hero__bokeh--6"></div>
-        <div class="hero__bokeh hero__bokeh--7"></div>
     </div>
 
     <!-- Animated Gold Particles -->
@@ -29,34 +27,33 @@
         <span class="particle particle--10"></span>
         <span class="particle particle--11"></span>
         <span class="particle particle--12"></span>
-        <span class="particle particle--13"></span>
-        <span class="particle particle--14"></span>
-        <span class="particle particle--15"></span>
     </div>
 
     <!-- Content -->
     <div class="hero__content container">
-        <div class="hero__card glass">
-            <!-- Decorative top line -->
+        <!-- Left: Text -->
+        <div class="hero__text">
             <div class="hero__card-line"></div>
 
-            <p class="hero__subtitle">— STUDIO DE MODELAJE WEBCAM —</p>
+            <p class="hero__subtitle">Dejavu Estudios</p>
 
             <h1 class="hero__title">
-                Eleva Tu <br />
-                <span class="hero__title-accent">Presencia Digital</span>
+                <span class="hero__title-line">Tu Belleza,</span>
+                <span class="hero__title-line hero__title-line--delay">
+                    <span class="hero__title-accent">Tu Poder</span>
+                </span>
             </h1>
 
+            <p class="hero__tagline">Studio de Modelaje Webcam</p>
+
             <p class="hero__description">
-                Somos un estudio profesional dedicado a potenciar tu carrera en
-                el modelaje webcam. Te brindamos las herramientas, el
-                acompañamiento y la estrategia que necesitas para brillar con
-                confianza.
+                Maximiza tus ingresos con el respaldo de un equipo profesional.
+                Estrategia, herramientas y acompañamiento para que ganes más.
             </p>
 
             <div class="hero__actions">
                 <a href="#contacto" class="hero__btn hero__btn--primary">
-                    <span>Comienza Ahora</span>
+                    <span>Empieza a Ganar</span>
                     <svg
                         width="16"
                         height="16"
@@ -74,9 +71,24 @@
                     Conoce Más
                 </a>
             </div>
+        </div>
 
-            <!-- Decorative bottom line -->
-            <div class="hero__card-line hero__card-line--bottom"></div>
+        <!-- Right: Image -->
+        <div class="hero__image-wrap">
+            <div class="hero__image-frame">
+                <!-- CAMBIAR ESTA RUTA POR TU IMAGEN REAL -->
+                <img
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop&crop=face"
+                    alt="Modelo profesional Dejavu Estudios"
+                    class="hero__image"
+                    loading="eager"
+                />
+                <div class="hero__image-overlay"></div>
+                <div class="hero__image-border"></div>
+            </div>
+            <!-- Floating accent elements -->
+            <div class="hero__float hero__float--1">✦</div>
+            <div class="hero__float hero__float--2"></div>
         </div>
     </div>
 
@@ -116,13 +128,8 @@
         background:
             radial-gradient(
                 ellipse 80% 60% at 50% 40%,
-                rgba(212, 175, 55, 0.08) 0%,
+                rgba(212, 175, 55, 0.06) 0%,
                 transparent 70%
-            ),
-            radial-gradient(
-                ellipse 60% 50% at 20% 80%,
-                rgba(212, 175, 55, 0.05) 0%,
-                transparent 60%
             ),
             radial-gradient(
                 ellipse 50% 40% at 85% 20%,
@@ -136,105 +143,89 @@
     .hero__bokeh {
         position: absolute;
         border-radius: 50%;
-        filter: blur(60px);
+        filter: blur(70px);
         opacity: 0;
-        animation: bokehPulse 8s ease-in-out infinite;
+        animation: bokehPulse 10s ease-in-out infinite;
     }
 
     .hero__bokeh--1 {
-        width: 300px;
-        height: 300px;
+        width: 350px;
+        height: 350px;
         top: 10%;
-        left: 15%;
+        left: 10%;
         background: radial-gradient(
             circle,
-            rgba(212, 175, 55, 0.15),
+            rgba(212, 175, 55, 0.12),
             transparent 70%
         );
         animation-delay: 0s;
     }
     .hero__bokeh--2 {
-        width: 200px;
-        height: 200px;
-        top: 60%;
-        right: 10%;
-        background: radial-gradient(
-            circle,
-            rgba(255, 215, 0, 0.12),
-            transparent 70%
-        );
-        animation-delay: 2s;
-    }
-    .hero__bokeh--3 {
         width: 250px;
         height: 250px;
-        bottom: 20%;
-        left: 40%;
-        background: radial-gradient(
-            circle,
-            rgba(212, 175, 55, 0.1),
-            transparent 70%
-        );
-        animation-delay: 4s;
-    }
-    .hero__bokeh--4 {
-        width: 180px;
-        height: 180px;
-        top: 30%;
-        right: 30%;
+        top: 55%;
+        right: 5%;
         background: radial-gradient(
             circle,
             rgba(255, 215, 0, 0.08),
             transparent 70%
         );
-        animation-delay: 1s;
+        animation-delay: 2.5s;
     }
-    .hero__bokeh--5 {
-        width: 350px;
-        height: 350px;
-        top: 50%;
-        left: 5%;
+    .hero__bokeh--3 {
+        width: 200px;
+        height: 200px;
+        bottom: 15%;
+        left: 35%;
         background: radial-gradient(
             circle,
-            rgba(184, 150, 46, 0.06),
-            transparent 70%
-        );
-        animation-delay: 3s;
-    }
-    .hero__bokeh--6 {
-        width: 160px;
-        height: 160px;
-        top: 5%;
-        right: 20%;
-        background: radial-gradient(
-            circle,
-            rgba(255, 239, 179, 0.08),
+            rgba(212, 175, 55, 0.08),
             transparent 70%
         );
         animation-delay: 5s;
     }
-    .hero__bokeh--7 {
-        width: 220px;
-        height: 220px;
-        bottom: 10%;
+    .hero__bokeh--4 {
+        width: 280px;
+        height: 280px;
+        top: 25%;
         right: 25%;
         background: radial-gradient(
             circle,
-            rgba(212, 175, 55, 0.1),
+            rgba(255, 255, 255, 0.03),
             transparent 70%
         );
-        animation-delay: 6s;
+        animation-delay: 3.5s;
+    }
+    .hero__bokeh--5 {
+        width: 180px;
+        height: 180px;
+        bottom: 30%;
+        right: 15%;
+        background: radial-gradient(
+            circle,
+            rgba(212, 175, 55, 0.06),
+            transparent 70%
+        );
+        animation-delay: 7s;
     }
 
     @keyframes bokehPulse {
         0%,
         100% {
-            opacity: 0.3;
-            transform: scale(1);
+            opacity: 0.25;
+            transform: scale(1) translate(0, 0);
+        }
+        25% {
+            opacity: 0.5;
+            transform: scale(1.1) translate(5px, -5px);
         }
         50% {
-            opacity: 0.7;
-            transform: scale(1.15);
+            opacity: 0.6;
+            transform: scale(1.18) translate(-3px, 8px);
+        }
+        75% {
+            opacity: 0.4;
+            transform: scale(1.05) translate(4px, 3px);
         }
     }
 
@@ -248,10 +239,7 @@
 
     .particle {
         position: absolute;
-        width: 3px;
-        height: 3px;
         border-radius: 50%;
-        background: var(--gold-300);
         opacity: 0;
         animation: particleFloat linear infinite;
     }
@@ -259,230 +247,206 @@
     .particle--1 {
         left: 8%;
         bottom: -5%;
-        animation-duration: 12s;
+        animation-duration: 14s;
         animation-delay: 0s;
         width: 2px;
         height: 2px;
+        background: var(--gold-300);
     }
     .particle--2 {
-        left: 18%;
+        left: 20%;
         bottom: -5%;
-        animation-duration: 15s;
-        animation-delay: 1.5s;
+        animation-duration: 18s;
+        animation-delay: 2s;
         width: 3px;
         height: 3px;
+        background: var(--gold-300);
     }
     .particle--3 {
-        left: 28%;
+        left: 32%;
         bottom: -5%;
-        animation-duration: 10s;
-        animation-delay: 3s;
+        animation-duration: 12s;
+        animation-delay: 4s;
         width: 2px;
         height: 2px;
+        background: var(--silver-200);
     }
     .particle--4 {
-        left: 38%;
-        bottom: -5%;
-        animation-duration: 14s;
-        animation-delay: 0.5s;
-        width: 4px;
-        height: 4px;
-    }
-    .particle--5 {
-        left: 48%;
-        bottom: -5%;
-        animation-duration: 11s;
-        animation-delay: 2s;
-        width: 2px;
-        height: 2px;
-    }
-    .particle--6 {
-        left: 58%;
-        bottom: -5%;
-        animation-duration: 13s;
-        animation-delay: 4s;
-        width: 3px;
-        height: 3px;
-    }
-    .particle--7 {
-        left: 68%;
+        left: 44%;
         bottom: -5%;
         animation-duration: 16s;
         animation-delay: 1s;
-        width: 2px;
-        height: 2px;
-    }
-    .particle--8 {
-        left: 78%;
-        bottom: -5%;
-        animation-duration: 12s;
-        animation-delay: 3.5s;
         width: 3px;
         height: 3px;
+        background: var(--gold-300);
     }
-    .particle--9 {
+    .particle--5 {
+        left: 55%;
+        bottom: -5%;
+        animation-duration: 13s;
+        animation-delay: 3s;
+        width: 2px;
+        height: 2px;
+        background: var(--silver-200);
+    }
+    .particle--6 {
+        left: 66%;
+        bottom: -5%;
+        animation-duration: 15s;
+        animation-delay: 5.5s;
+        width: 3px;
+        height: 3px;
+        background: var(--gold-300);
+    }
+    .particle--7 {
+        left: 77%;
+        bottom: -5%;
+        animation-duration: 17s;
+        animation-delay: 1.5s;
+        width: 2px;
+        height: 2px;
+        background: var(--gold-300);
+    }
+    .particle--8 {
         left: 88%;
         bottom: -5%;
         animation-duration: 14s;
-        animation-delay: 2.5s;
-        width: 2px;
-        height: 2px;
+        animation-delay: 4.5s;
+        width: 3px;
+        height: 3px;
+        background: var(--silver-200);
     }
-    .particle--10 {
-        left: 13%;
+    .particle--9 {
+        left: 15%;
         bottom: -5%;
-        animation-duration: 11s;
-        animation-delay: 5s;
-        width: 4px;
-        height: 4px;
-    }
-    .particle--11 {
-        left: 33%;
-        bottom: -5%;
-        animation-duration: 13s;
+        animation-duration: 16s;
         animation-delay: 6s;
         width: 2px;
         height: 2px;
+        background: var(--gold-300);
+    }
+    .particle--10 {
+        left: 50%;
+        bottom: -5%;
+        animation-duration: 13s;
+        animation-delay: 7s;
+        width: 4px;
+        height: 4px;
+        background: var(--gold-300);
+    }
+    .particle--11 {
+        left: 72%;
+        bottom: -5%;
+        animation-duration: 19s;
+        animation-delay: 2.5s;
+        width: 2px;
+        height: 2px;
+        background: var(--silver-200);
     }
     .particle--12 {
-        left: 53%;
+        left: 38%;
         bottom: -5%;
         animation-duration: 15s;
-        animation-delay: 1.2s;
-        width: 3px;
-        height: 3px;
-    }
-    .particle--13 {
-        left: 73%;
-        bottom: -5%;
-        animation-duration: 10s;
-        animation-delay: 4.5s;
+        animation-delay: 8s;
         width: 2px;
         height: 2px;
-    }
-    .particle--14 {
-        left: 93%;
-        bottom: -5%;
-        animation-duration: 12s;
-        animation-delay: 0.8s;
-        width: 3px;
-        height: 3px;
-    }
-    .particle--15 {
-        left: 43%;
-        bottom: -5%;
-        animation-duration: 16s;
-        animation-delay: 7s;
-        width: 2px;
-        height: 2px;
+        background: var(--gold-300);
     }
 
     @keyframes particleFloat {
         0% {
-            transform: translateY(0) translateX(0);
+            transform: translateY(0) translateX(0) scale(1);
             opacity: 0;
         }
-        10% {
-            opacity: 0.8;
+        8% {
+            opacity: 0.9;
         }
-        50% {
-            opacity: 0.4;
+        30% {
+            transform: translateY(-30vh) translateX(15px) scale(0.8);
+            opacity: 0.5;
         }
-        90% {
-            opacity: 0.6;
+        60% {
+            transform: translateY(-65vh) translateX(-10px) scale(1.1);
+            opacity: 0.7;
         }
         100% {
-            transform: translateY(-110vh) translateX(30px);
+            transform: translateY(-115vh) translateX(20px) scale(0.6);
             opacity: 0;
         }
     }
 
-    /* ─── Content ─── */
+    /* ─── Content (Split Layout) ─── */
     .hero__content {
         position: relative;
         z-index: 2;
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         align-items: center;
-        justify-content: center;
-        padding-top: 72px; /* navbar offset */
+        gap: clamp(2rem, 5vw, 5rem);
+        padding-top: 100px;
+        padding-bottom: 60px;
+        min-height: 100vh;
     }
 
-    .hero__card {
-        position: relative;
-        max-width: 680px;
-        padding: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 5vw, 4rem);
-        text-align: center;
-        animation: cardReveal 1.2s var(--ease-out-expo) both;
+    /* ─── Text Side ─── */
+    .hero__text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero__card-line {
+        width: 50px;
+        height: 1px;
+        margin-bottom: 2rem;
+        background: linear-gradient(90deg, var(--silver-300), transparent);
+        animation: lineSlideIn 1.2s var(--ease-out-expo) both;
         animation-delay: 0.3s;
     }
 
-    @keyframes cardReveal {
-        from {
-            opacity: 0;
-            transform: translateY(40px) scale(0.96);
-            backdrop-filter: blur(0);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            backdrop-filter: blur(var(--glass-blur));
-        }
-    }
-
-    /* Decorative gold lines */
-    .hero__card-line {
-        width: 60px;
-        height: 1.5px;
-        margin: 0 auto 2rem;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            var(--gold-400),
-            transparent
-        );
-        animation: lineExpand 1.5s var(--ease-out-expo) both;
-        animation-delay: 0.8s;
-    }
-
-    .hero__card-line--bottom {
-        margin: 2rem auto 0;
-        animation-delay: 1s;
-    }
-
-    @keyframes lineExpand {
+    @keyframes lineSlideIn {
         from {
             width: 0;
             opacity: 0;
         }
         to {
-            width: 60px;
+            width: 50px;
             opacity: 1;
         }
     }
 
-    /* Subtitle */
     .hero__subtitle {
         font-family: var(--font-body);
-        font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+        font-size: clamp(0.65rem, 1.5vw, 0.78rem);
         font-weight: 500;
         letter-spacing: 0.3em;
         text-transform: uppercase;
         color: var(--gold-400);
         margin-bottom: 1.25rem;
-        animation: fadeUp 1s var(--ease-out-expo) both;
+        animation: fadeSlideUp 1s var(--ease-out-expo) both;
+        animation-delay: 0.5s;
+    }
+
+    .hero__title {
+        font-family: var(--font-display);
+        font-size: clamp(2.4rem, 5.5vw, 4rem);
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--white);
+        margin-bottom: 1rem;
+    }
+
+    .hero__title-line {
+        display: block;
+        overflow: hidden;
+    }
+
+    .hero__title-line {
+        animation: titleReveal 1s var(--ease-out-expo) both;
         animation-delay: 0.6s;
     }
 
-    /* Title */
-    .hero__title {
-        font-family: var(--font-display);
-        font-size: clamp(2.2rem, 5.5vw, 3.8rem);
-        font-weight: 600;
-        line-height: 1.15;
-        color: var(--white);
-        margin-bottom: 1.5rem;
-        animation: fadeUp 1s var(--ease-out-expo) both;
-        animation-delay: 0.75s;
+    .hero__title-line--delay {
+        animation-delay: 0.8s;
     }
 
     .hero__title-accent {
@@ -495,37 +459,71 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        font-style: italic;
     }
 
-    /* Description */
-    .hero__description {
-        font-size: clamp(0.9rem, 1.8vw, 1.05rem);
-        color: var(--gray-light);
-        max-width: 520px;
-        margin: 0 auto 2.25rem;
-        line-height: 1.8;
-        animation: fadeUp 1s var(--ease-out-expo) both;
+    @keyframes titleReveal {
+        from {
+            opacity: 0;
+            transform: translateY(100%);
+            filter: blur(4px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+    }
+
+    .hero__tagline {
+        font-family: var(--font-body);
+        font-size: clamp(0.7rem, 1.4vw, 0.85rem);
+        font-weight: 300;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--silver-300);
+        margin-bottom: 1.75rem;
+        animation: fadeSlideUp 1s var(--ease-out-expo) both;
         animation-delay: 0.9s;
     }
 
-    /* Actions */
+    .hero__description {
+        font-size: clamp(0.9rem, 1.8vw, 1.02rem);
+        color: var(--silver-200);
+        max-width: 440px;
+        margin-bottom: 2.25rem;
+        line-height: 1.8;
+        font-weight: 300;
+        animation: fadeSlideUp 1s var(--ease-out-expo) both;
+        animation-delay: 1s;
+    }
+
     .hero__actions {
         display: flex;
         align-items: center;
-        justify-content: center;
         gap: 1rem;
         flex-wrap: wrap;
-        animation: fadeUp 1s var(--ease-out-expo) both;
-        animation-delay: 1.05s;
+        animation: fadeSlideUp 1s var(--ease-out-expo) both;
+        animation-delay: 1.15s;
     }
 
+    @keyframes fadeSlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Buttons */
     .hero__btn {
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
         padding: 0.9rem 2.25rem;
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         font-weight: 600;
         letter-spacing: 0.1em;
         text-transform: uppercase;
@@ -544,39 +542,128 @@
     }
 
     .hero__btn--primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 35px rgba(212, 175, 55, 0.4);
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
     }
 
     .hero__btn--primary svg {
         transition: transform var(--transition-base);
     }
-
     .hero__btn--primary:hover svg {
-        transform: translateX(4px);
+        transform: translateX(5px);
     }
 
     .hero__btn--secondary {
-        color: var(--gold-300);
-        background: rgba(212, 175, 55, 0.08);
-        border: 1px solid rgba(212, 175, 55, 0.3);
+        color: var(--white);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.25);
         backdrop-filter: blur(8px);
     }
 
     .hero__btn--secondary:hover {
-        background: rgba(212, 175, 55, 0.15);
-        border-color: rgba(212, 175, 55, 0.5);
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.4);
         transform: translateY(-2px);
     }
 
-    @keyframes fadeUp {
+    /* ─── Image Side ─── */
+    .hero__image-wrap {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        animation: imageReveal 1.4s var(--ease-out-expo) both;
+        animation-delay: 0.4s;
+    }
+
+    @keyframes imageReveal {
         from {
             opacity: 0;
-            transform: translateY(25px);
+            transform: translateY(40px) scale(0.92);
+            filter: blur(8px);
         }
         to {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+    }
+
+    .hero__image-frame {
+        position: relative;
+        width: clamp(280px, 85%, 420px);
+        aspect-ratio: 3 / 4;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .hero__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s var(--ease-out-expo);
+    }
+
+    .hero__image-frame:hover .hero__image {
+        transform: scale(1.05);
+    }
+
+    .hero__image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            180deg,
+            transparent 40%,
+            rgba(10, 10, 10, 0.6) 100%
+        );
+        pointer-events: none;
+    }
+
+    .hero__image-border {
+        position: absolute;
+        inset: 0;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        pointer-events: none;
+        transition: border-color var(--transition-base);
+    }
+
+    .hero__image-frame:hover .hero__image-border {
+        border-color: rgba(212, 175, 55, 0.35);
+    }
+
+    /* Floating decorative elements */
+    .hero__float {
+        position: absolute;
+        z-index: 3;
+        pointer-events: none;
+    }
+
+    .hero__float--1 {
+        top: -10px;
+        right: 5%;
+        font-size: 1.2rem;
+        color: var(--gold-300);
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.4));
+        animation: floatBounce 4s ease-in-out infinite;
+    }
+
+    .hero__float--2 {
+        bottom: 15%;
+        left: -5%;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        animation: floatBounce 5s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatBounce {
+        0%,
+        100% {
+            transform: translateY(0) rotate(0deg);
+        }
+        50% {
+            transform: translateY(-15px) rotate(5deg);
         }
     }
 
@@ -591,21 +678,21 @@
         align-items: center;
         gap: 0.5rem;
         z-index: 2;
-        animation: fadeUp 1s var(--ease-out-expo) both;
-        animation-delay: 1.5s;
+        animation: fadeSlideUp 1s var(--ease-out-expo) both;
+        animation-delay: 1.8s;
     }
 
     .hero__scroll-text {
-        font-size: 0.65rem;
-        letter-spacing: 0.2em;
+        font-size: 0.6rem;
+        letter-spacing: 0.25em;
         text-transform: uppercase;
-        color: var(--gray);
+        color: var(--silver-400);
     }
 
     .hero__scroll-line {
         width: 1px;
         height: 40px;
-        background: rgba(212, 175, 55, 0.2);
+        background: rgba(255, 255, 255, 0.12);
         position: relative;
         overflow: hidden;
         border-radius: 1px;
@@ -613,20 +700,20 @@
 
     .hero__scroll-dot {
         width: 3px;
-        height: 8px;
-        background: var(--gold-400);
-        border-radius: 2px;
+        height: 10px;
+        background: var(--silver-200);
+        border-radius: 3px;
         position: absolute;
         left: -1px;
-        animation: scrollDot 2s ease-in-out infinite;
+        animation: scrollDot 2.5s ease-in-out infinite;
     }
 
     @keyframes scrollDot {
         0% {
-            top: -8px;
+            top: -10px;
             opacity: 0;
         }
-        30% {
+        25% {
             opacity: 1;
         }
         100% {
@@ -636,20 +723,46 @@
     }
 
     /* ─── Responsive ─── */
-    @media (max-width: 640px) {
-        .hero__card {
-            padding: 2rem 1.5rem;
-            border-radius: 12px;
+    @media (max-width: 768px) {
+        .hero__content {
+            grid-template-columns: 1fr;
+            text-align: center;
+            padding-top: 90px;
+            gap: 2.5rem;
+        }
+
+        .hero__text {
+            align-items: center;
+            order: 2;
+        }
+
+        .hero__image-wrap {
+            order: 1;
+        }
+
+        .hero__card-line {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero__description {
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .hero__actions {
+            justify-content: center;
             flex-direction: column;
-            gap: 0.75rem;
         }
 
         .hero__btn {
             width: 100%;
+            max-width: 280px;
             justify-content: center;
+        }
+
+        .hero__image-frame {
+            width: clamp(220px, 65%, 320px);
         }
 
         .hero__scroll {

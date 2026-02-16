@@ -1,0 +1,281 @@
+---
+/* Testimonials — Enhanced with avatar images and white/silver accents */
+---
+
+<section class="testimonials">
+    <div class="testimonials__inner container">
+        <div class="testimonials__header reveal">
+            <p class="testimonials__label">Historias reales</p>
+            <h2 class="testimonials__title">
+                Ellas ya <span class="gold-gradient-text">lo lograron</span>
+            </h2>
+        </div>
+
+        <div class="testimonials__track">
+            <!-- Card 1 -->
+            <div class="testimonials__card glass reveal-scale" data-delay="0">
+                <div class="testimonials__card-top">
+                    <div class="testimonials__card-stars">★★★★★</div>
+                    <div class="testimonials__card-metric">
+                        <span class="testimonials__card-metric-number"
+                            >$4.2M</span
+                        >
+                        <span class="testimonials__card-metric-label"
+                            >en 6 meses</span
+                        >
+                    </div>
+                </div>
+                <blockquote class="testimonials__card-quote">
+                    "En mi primer mes logré duplicar lo que ganaba en mi trabajo
+                    anterior. El equipo de Dejavu me acompañó en cada paso."
+                </blockquote>
+                <div class="testimonials__card-author">
+                    <!-- CAMBIAR POR FOTO REAL -->
+                    <img
+                        src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&h=80&fit=crop&crop=face"
+                        alt="Valentina"
+                        class="testimonials__card-avatar"
+                        loading="lazy"
+                    />
+                    <div>
+                        <p class="testimonials__card-name">Valentina R.</p>
+                        <p class="testimonials__card-role">Modelo desde 2023</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="testimonials__card glass reveal-scale" data-delay="1">
+                <div class="testimonials__card-top">
+                    <div class="testimonials__card-stars">★★★★★</div>
+                    <div class="testimonials__card-metric">
+                        <span class="testimonials__card-metric-number"
+                            >Top 0.5%</span
+                        >
+                        <span class="testimonials__card-metric-label"
+                            >plataforma</span
+                        >
+                    </div>
+                </div>
+                <blockquote class="testimonials__card-quote">
+                    "Lo que más valoro es la privacidad y el profesionalismo. Me
+                    siento segura y respaldada. Los resultados hablan solos."
+                </blockquote>
+                <div class="testimonials__card-author">
+                    <!-- CAMBIAR POR FOTO REAL -->
+                    <img
+                        src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&crop=face"
+                        alt="Camila"
+                        class="testimonials__card-avatar"
+                        loading="lazy"
+                    />
+                    <div>
+                        <p class="testimonials__card-name">Camila S.</p>
+                        <p class="testimonials__card-role">Modelo desde 2022</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="testimonials__card glass reveal-scale" data-delay="2">
+                <div class="testimonials__card-top">
+                    <div class="testimonials__card-stars">★★★★★</div>
+                    <div class="testimonials__card-metric">
+                        <span class="testimonials__card-metric-number">3x</span>
+                        <span class="testimonials__card-metric-label"
+                            >ingresos</span
+                        >
+                    </div>
+                </div>
+                <blockquote class="testimonials__card-quote">
+                    "Llegué sin experiencia y hoy soy independiente
+                    financieramente. El coaching personalizado fue un cambio
+                    total en mi vida."
+                </blockquote>
+                <div class="testimonials__card-author">
+                    <!-- CAMBIAR POR FOTO REAL -->
+                    <img
+                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face"
+                        alt="María"
+                        class="testimonials__card-avatar"
+                        loading="lazy"
+                    />
+                    <div>
+                        <p class="testimonials__card-name">María L.</p>
+                        <p class="testimonials__card-role">Modelo desde 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .testimonials {
+        padding: var(--section-padding) 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .testimonials::before {
+        content: "";
+        position: absolute;
+        bottom: 10%;
+        left: -5%;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: radial-gradient(
+            circle,
+            rgba(212, 175, 55, 0.04) 0%,
+            transparent 70%
+        );
+        filter: blur(80px);
+        pointer-events: none;
+    }
+
+    .testimonials__header {
+        text-align: center;
+        margin-bottom: clamp(3rem, 6vw, 5rem);
+    }
+
+    .testimonials__label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold-400);
+        margin-bottom: 1rem;
+    }
+
+    .testimonials__title {
+        font-family: var(--font-display);
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 600;
+        color: var(--white);
+        line-height: 1.2;
+    }
+
+    /* Horizontal scroll track */
+    .testimonials__track {
+        display: flex;
+        gap: 1.5rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding-bottom: 1rem;
+        -ms-overflow-style: none;
+    }
+    .testimonials__track::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Card */
+    .testimonials__card {
+        flex: 0 0 clamp(300px, 38vw, 380px);
+        scroll-snap-align: start;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+        transition:
+            transform var(--transition-base),
+            border-color var(--transition-base),
+            box-shadow var(--transition-base);
+    }
+
+    .testimonials__card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .testimonials__card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .testimonials__card-stars {
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        color: var(--gold-300);
+    }
+
+    .testimonials__card-metric {
+        display: flex;
+        align-items: baseline;
+        gap: 0.35rem;
+    }
+
+    .testimonials__card-metric-number {
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--gold-300), var(--gold-400));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .testimonials__card-metric-label {
+        font-size: 0.65rem;
+        color: var(--silver-400);
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .testimonials__card-quote {
+        font-size: 0.92rem;
+        color: var(--silver-100);
+        line-height: 1.8;
+        font-weight: 300;
+        font-style: italic;
+        border: none;
+        margin: 0;
+        padding: 0;
+        flex: 1;
+    }
+
+    .testimonials__card-author {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .testimonials__card-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(212, 175, 55, 0.3);
+        transition: border-color var(--transition-base);
+    }
+
+    .testimonials__card:hover .testimonials__card-avatar {
+        border-color: rgba(212, 175, 55, 0.6);
+    }
+
+    .testimonials__card-name {
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--white);
+    }
+
+    .testimonials__card-role {
+        font-size: 0.72rem;
+        color: var(--silver-400);
+        font-weight: 300;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .testimonials__card {
+            flex: 0 0 85vw;
+        }
+    }
+</style>

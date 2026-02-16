@@ -1,10 +1,184 @@
 ---
 import Navbar from "../components/Navbar.astro";
 import Hero from "../components/Hero.astro";
+import StatsTicker from "../components/StatsTicker.astro";
+import Benefits from "../components/Benefits.astro";
+import Gallery from "../components/Gallery.astro";
+import Process from "../components/Process.astro";
+import Testimonials from "../components/Testimonials.astro";
+import FinalCTA from "../components/FinalCTA.astro";
+import Footer from "../components/Footer.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
 	<Navbar />
-	<Hero />
+	<main>
+		<Hero />
+		<StatsTicker />
+		<Benefits />
+		<Gallery />
+		<Process />
+		<Testimonials />
+		<FinalCTA />
+	</main>
+	<Footer />
 </Layout>
+
+<!-- Enhanced Scroll Reveal Observer -->
+<script>
+	const animatedElements = document.querySelectorAll(
+		".reveal, .reveal-scale, .reveal-slide-left, .reveal-slide-right",
+	);
+
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					const delay = entry.target.getAttribute("data-delay");
+					const ms = delay ? parseInt(delay) * 200 : 0;
+
+					setTimeout(() => {
+						entry.target.classList.add("revealed");
+					}, ms);
+
+					observer.unobserve(entry.target);
+				}
+			});
+		},
+		{
+			threshold: 0.08,
+			rootMargin: "0px 0px -50px 0px",
+		},
+	);
+
+	animatedElements.forEach((el) => observer.observe(el));
+</script>
+
+<style is:global>
+	/* ═══════════════════════════════════════════
+     SCROLL REVEAL ANIMATIONS — Slower, More Elegant
+  ═══════════════════════════════════════════ */
+
+	/* Fade Up (default) — slow and dramatic */
+	.reveal {
+		opacity: 0;
+		transform: translateY(50px);
+		transition:
+			opacity 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+			filter 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+		filter: blur(4px);
+	}
+	.reveal.revealed {
+		opacity: 1;
+		transform: translateY(0);
+		filter: blur(0);
+	}
+
+	/* Scale Up — cinematic zoom in with blur */
+	.reveal-scale {
+		opacity: 0;
+		transform: scale(0.85);
+		transition:
+			opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 1.6s cubic-bezier(0.22, 1, 0.36, 1),
+			filter 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+		filter: blur(6px);
+	}
+	.reveal-scale.revealed {
+		opacity: 1;
+		transform: scale(1);
+		filter: blur(0);
+	}
+
+	/* Slide from Left — elegant entrance */
+	.reveal-slide-left {
+		opacity: 0;
+		transform: translateX(-60px);
+		transition:
+			opacity 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+			filter 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+		filter: blur(3px);
+	}
+	.reveal-slide-left.revealed {
+		opacity: 1;
+		transform: translateX(0);
+		filter: blur(0);
+	}
+
+	/* Slide from Right — elegant entrance */
+	.reveal-slide-right {
+		opacity: 0;
+		transform: translateX(60px);
+		transition:
+			opacity 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+			transform 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+			filter 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+		filter: blur(3px);
+	}
+	.reveal-slide-right.revealed {
+		opacity: 1;
+		transform: translateX(0);
+		filter: blur(0);
+	}
+
+	/* Section dividers */
+	section + section {
+		border-top: 1px solid rgba(255, 255, 255, 0.04);
+	}
+
+	/* ═══════════════════════════════════════════
+     GLOBAL FOG / MIST EFFECT
+  ═══════════════════════════════════════════ */
+	.fog-section {
+		position: relative;
+	}
+	.fog-section::after {
+		content: "";
+		position: absolute;
+		bottom: -40px;
+		left: 0;
+		width: 100%;
+		height: 120px;
+		background: linear-gradient(0deg, var(--black) 0%, transparent 100%);
+		pointer-events: none;
+		z-index: 3;
+	}
+
+	/* ═══════════════════════════════════════════
+     GLOBAL MOBILE RESPONSIVE OVERRIDES
+  ═══════════════════════════════════════════ */
+	@media (max-width: 768px) {
+		/* Reduce animation travel distance on mobile */
+		.reveal {
+			transform: translateY(30px);
+		}
+		.reveal-scale {
+			transform: scale(0.9);
+		}
+		.reveal-slide-left {
+			transform: translateX(-30px);
+		}
+		.reveal-slide-right {
+			transform: translateX(30px);
+		}
+
+		/* Global image treatment */
+		img {
+			border-radius: 16px;
+		}
+
+		/* Global section padding */
+		section {
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+		}
+	}
+
+	/* All images get smooth rounded corners by default */
+	main img {
+		border-radius: 16px;
+	}
+</style>

@@ -5,8 +5,8 @@ interface Props {
 }
 
 const {
-	title = "Bizarre Binary — Studio de Modelaje Webcam",
-	description = "Estudio profesional de modelaje webcam. Eleva tu presencia digital con el respaldo de expertos. Únete a Bizarre Binary.",
+	title = "Dejavu Estudios — Studio de Modelaje Webcam",
+	description = "Dejavu Estudios — Estudio profesional de modelaje webcam. Eleva tu presencia digital con el respaldo de expertos.",
 } = Astro.props;
 ---
 
@@ -25,7 +25,7 @@ const {
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap"
 			rel="stylesheet"
 		/>
 	</head>
@@ -48,6 +48,13 @@ const {
 		--gold-500: #b8962e;
 		--gold-600: #9a7d25;
 
+		/* Silver palette */
+		--silver-100: #f0f0f0;
+		--silver-200: #d0d0d0;
+		--silver-300: #b8b8b8;
+		--silver-400: #a0a0a0;
+		--silver-500: #808080;
+
 		/* Neutrals */
 		--black: #0a0a0a;
 		--black-light: #1a1a1a;
@@ -66,8 +73,10 @@ const {
 		--glass-blur: 16px;
 
 		/* Typography */
-		--font-display: "Playfair Display", Georgia, serif;
-		--font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+		--font-display:
+			"Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
+		--font-body:
+			"Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
 
 		/* Spacing */
 		--section-padding: clamp(3rem, 8vw, 6rem);

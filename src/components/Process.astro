@@ -1,0 +1,226 @@
+---
+/* Process — Vertical timeline "¿Cómo funciona?" */
+---
+
+<section class="process">
+    <div class="process__inner container">
+        <div class="process__header reveal">
+            <p class="process__label">Simple y directo</p>
+            <h2 class="process__title">
+                ¿Cómo <span class="gold-gradient-text">funciona</span>?
+            </h2>
+        </div>
+
+        <div class="process__timeline">
+            <!-- Step 1 -->
+            <div class="process__step reveal" data-delay="0">
+                <div class="process__step-number">
+                    <span>01</span>
+                </div>
+                <div class="process__step-content glass">
+                    <h3 class="process__step-title">Aplica</h3>
+                    <p class="process__step-text">
+                        Contáctanos y agenda tu entrevista. No necesitas
+                        experiencia previa, solo actitud y ganas de crecer.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="process__step reveal" data-delay="1">
+                <div class="process__step-number">
+                    <span>02</span>
+                </div>
+                <div class="process__step-content glass">
+                    <h3 class="process__step-title">Entrena</h3>
+                    <p class="process__step-text">
+                        Recibe capacitación completa: técnicas, plataformas,
+                        imagen personal y estrategias de monetización.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="process__step reveal" data-delay="2">
+                <div class="process__step-number">
+                    <span>03</span>
+                </div>
+                <div class="process__step-content glass">
+                    <h3 class="process__step-title">Transmite</h3>
+                    <p class="process__step-text">
+                        Comienza a transmitir desde nuestros sets profesionales
+                        con todo el soporte técnico y de coaching en tiempo
+                        real.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="process__step reveal" data-delay="3">
+                <div class="process__step-number">
+                    <span>04</span>
+                </div>
+                <div class="process__step-content glass">
+                    <h3 class="process__step-title">Gana</h3>
+                    <p class="process__step-text">
+                        Recibe tus pagos de forma puntual y transparente. Sin
+                        sorpresas, sin letra pequeña.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .process {
+        padding: var(--section-padding) 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Subtle background accent */
+    .process::before {
+        content: "";
+        position: absolute;
+        top: 20%;
+        right: -10%;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(
+            circle,
+            rgba(212, 175, 55, 0.04) 0%,
+            transparent 70%
+        );
+        filter: blur(80px);
+        pointer-events: none;
+    }
+
+    .process__header {
+        text-align: center;
+        margin-bottom: clamp(3rem, 6vw, 5rem);
+    }
+
+    .process__label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold-400);
+        margin-bottom: 1rem;
+    }
+
+    .process__title {
+        font-family: var(--font-display);
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 600;
+        color: var(--white);
+        line-height: 1.2;
+    }
+
+    /* Timeline */
+    .process__timeline {
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    /* Vertical line */
+    .process__timeline::before {
+        content: "";
+        position: absolute;
+        left: 28px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+            180deg,
+            var(--gold-400),
+            rgba(212, 175, 55, 0.1)
+        );
+    }
+
+    /* Step */
+    .process__step {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        position: relative;
+    }
+
+    .process__step-number {
+        flex-shrink: 0;
+        width: 56px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--black);
+        border: 1px solid rgba(212, 175, 55, 0.4);
+        z-index: 1;
+        transition: all var(--transition-base);
+    }
+
+    .process__step:hover .process__step-number {
+        background: rgba(212, 175, 55, 0.15);
+        border-color: var(--gold-300);
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+    }
+
+    .process__step-number span {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--gold-300), var(--gold-400));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .process__step-content {
+        flex: 1;
+        padding: 1.75rem 2rem;
+        transition:
+            transform var(--transition-base),
+            border-color var(--transition-base);
+    }
+
+    .process__step:hover .process__step-content {
+        transform: translateX(6px);
+        border-color: rgba(212, 175, 55, 0.35);
+    }
+
+    .process__step-title {
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--white);
+        margin-bottom: 0.5rem;
+    }
+
+    .process__step-text {
+        font-size: 0.88rem;
+        color: var(--silver-300);
+        line-height: 1.7;
+        font-weight: 300;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        .process__timeline::before {
+            left: 24px;
+        }
+        .process__step-number {
+            width: 48px;
+            height: 48px;
+        }
+        .process__step-content {
+            padding: 1.25rem 1.5rem;
+        }
+    }
+</style>
