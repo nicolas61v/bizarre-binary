@@ -1,5 +1,17 @@
 ---
 /* Hero — Split layout with image, enhanced animations, gold particles */
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const heroContent = await reader.singletons.hero.read();
+
+const defaultImage =
+    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop&crop=face";
+const heroImage = heroContent?.image ? heroContent.image : defaultImage;
+const heroSubtitle = heroContent?.subtitle || "Dejavu Estudios";
+const heroTagline = heroContent?.tagline || "Studio de Modelaje Webcam";
+const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
 ---
 
 <section class="hero" id="inicio">
@@ -35,16 +47,13 @@
         <div class="hero__text">
             <div class="hero__card-line"></div>
 
-            <p class="hero__subtitle">Dejavu Estudios</p>
+            <p class="hero__subtitle">{heroSubtitle}</p>
 
             <h1 class="hero__title">
-                <span class="hero__title-line">Tu Belleza,</span>
-                <span class="hero__title-line hero__title-line--delay">
-                    <span class="hero__title-accent">Tu Poder</span>
-                </span>
+                {heroTitle}
             </h1>
 
-            <p class="hero__tagline">Studio de Modelaje Webcam</p>
+            <p class="hero__tagline">{heroTagline}</p>
 
             <p class="hero__description">
                 Maximiza tus ingresos con el respaldo de un equipo profesional.
@@ -78,8 +87,8 @@
             <div class="hero__image-frame">
                 <!-- CAMBIAR ESTA RUTA POR TU IMAGEN REAL -->
                 <img
-                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop&crop=face"
-                    alt="Modelo profesional Dejavu Estudios"
+                    src={heroImage}
+                    alt={heroTitle}
                     class="hero__image"
                     loading="eager"
                 />

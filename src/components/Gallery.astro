@@ -1,5 +1,53 @@
 ---
 /* Gallery — Model showcase with placeholder images */
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const gallery = await reader.collections.gallery.all();
+
+// Fallback data if CMS is empty
+const defaultGallery = [
+    {
+        name: "Modelo Dejavu",
+        tag: "Top Model",
+        image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=600&fit=crop&crop=face",
+    },
+    {
+        name: "Modelo Dejavu",
+        tag: "Rising Star",
+        image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop&crop=face",
+    },
+    {
+        name: "Modelo Dejavu",
+        tag: "Elite",
+        image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=400&fit=crop&crop=face",
+    },
+    {
+        name: "Modelo Dejavu",
+        tag: "Premium",
+        image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=600&fit=crop&crop=face",
+    },
+    {
+        name: "Modelo Dejavu",
+        tag: "New",
+        image: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=400&h=400&fit=crop&crop=face",
+    },
+    {
+        name: "Modelo Dejavu",
+        tag: "Featured",
+        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face",
+    },
+];
+
+const items =
+    gallery.length > 0
+        ? gallery.map((item) => ({
+              name: item.entry.name,
+              tag: item.entry.tag,
+              image: item.entry.image,
+          }))
+        : defaultGallery;
 ---
 
 <section class="gallery" id="modelos">
@@ -16,234 +64,178 @@
         </div>
 
         <div class="gallery__grid">
-            <!-- CAMBIAR ESTAS RUTAS POR TUS IMÁGENES REALES -->
-            <div
-                class="gallery__item gallery__item--tall reveal-scale"
-                data-delay="0"
-            >
-                <img
-                    src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=600&fit=crop&crop=face"
-                    alt="Modelo Dejavu"
-                    loading="lazy"
-                />
-                <div class="gallery__item-overlay">
-                    <span class="gallery__item-tag">Top Model</span>
-                </div>
-                <div class="gallery__item-border"></div>
-            </div>
-
-            <div class="gallery__item reveal-scale" data-delay="1">
-                <img
-                    src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop&crop=face"
-                    alt="Modelo Dejavu"
-                    loading="lazy"
-                />
-                <div class="gallery__item-overlay">
-                    <span class="gallery__item-tag">Rising Star</span>
-                </div>
-                <div class="gallery__item-border"></div>
-            </div>
-
-            <div class="gallery__item reveal-scale" data-delay="2">
-                <img
-                    src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=400&fit=crop&crop=face"
-                    alt="Modelo Dejavu"
-                    loading="lazy"
-                />
-                <div class="gallery__item-overlay">
-                    <span class="gallery__item-tag">Elite</span>
-                </div>
-                <div class="gallery__item-border"></div>
-            </div>
-
-            <div
-                class="gallery__item gallery__item--tall reveal-scale"
-                data-delay="3"
-            >
-                <img
-                    src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=600&fit=crop&crop=face"
-                    alt="Modelo Dejavu"
-                    loading="lazy"
-                />
-                <div class="gallery__item-overlay">
-                    <span class="gallery__item-tag">Premium</span>
-                </div>
-                <div class="gallery__item-border"></div>
-            </div>
-
-            <div class="gallery__item reveal-scale" data-delay="4">
-                <img
-                    src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=400&h=400&fit=crop&crop=face"
-                    alt="Modelo Dejavu"
-                    loading="lazy"
-                />
-                <div class="gallery__item-overlay">
-                    <span class="gallery__item-tag">New</span>
-                </div>
-                <div class="gallery__item-border"></div>
-            </div>
-
-            <div class="gallery__item reveal-scale" data-delay="5">
-                <img
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face"
-                    alt="Modelo Dejavu"
-                    loading="lazy"
-                />
-                <div class="gallery__item-overlay">
-                    <span class="gallery__item-tag">Featured</span>
-                </div>
-                <div class="gallery__item-border"></div>
+            <div class="gallery__grid">
+                {
+                    items.map((item, index) => (
+                        <div
+                            class={`gallery__item ${index % 3 === 0 ? "gallery__item--tall" : ""} reveal-scale`}
+                            data-delay={index}
+                        >
+                            <img
+                                src={item.image}
+                                alt={item.name}
+                                loading="lazy"
+                            />
+                            <div class="gallery__item-overlay">
+                                <span class="gallery__item-tag">
+                                    {item.tag}
+                                </span>
+                            </div>
+                            <div class="gallery__item-border" />
+                        </div>
+                    ))
+                }
             </div>
         </div>
     </div>
-</section>
 
-<style>
-    .gallery {
-        padding: var(--section-padding) 0;
-        position: relative;
-    }
-
-    /* Background accent */
-    .gallery::before {
-        content: "";
-        position: absolute;
-        top: 30%;
-        left: -10%;
-        width: 500px;
-        height: 500px;
-        border-radius: 50%;
-        background: radial-gradient(
-            circle,
-            rgba(212, 175, 55, 0.04) 0%,
-            transparent 70%
-        );
-        filter: blur(80px);
-        pointer-events: none;
-    }
-
-    .gallery__header {
-        text-align: center;
-        margin-bottom: clamp(3rem, 6vw, 5rem);
-    }
-
-    .gallery__label {
-        font-size: 0.75rem;
-        font-weight: 500;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        color: var(--gold-400);
-        margin-bottom: 1rem;
-    }
-
-    .gallery__title {
-        font-family: var(--font-display);
-        font-size: clamp(1.8rem, 4vw, 2.8rem);
-        font-weight: 600;
-        color: var(--white);
-        line-height: 1.2;
-        margin-bottom: 1rem;
-    }
-
-    .gallery__subtitle {
-        font-size: 0.95rem;
-        color: var(--silver-300);
-        font-weight: 300;
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    /* Masonry-like grid */
-    .gallery__grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-auto-rows: 200px;
-        gap: 1.25rem;
-    }
-
-    .gallery__item {
-        position: relative;
-        border-radius: 20px; /* Increased from 16px */
-        overflow: hidden;
-        cursor: pointer;
-    }
-
-    .gallery__item--tall {
-        grid-row: span 2;
-    }
-
-    .gallery__item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1); /* Slower animation */
-    }
-
-    .gallery__item:hover img {
-        transform: scale(1.1);
-    }
-
-    .gallery__item-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-            180deg,
-            transparent 50%,
-            rgba(10, 10, 10, 0.8) 100%
-        );
-        display: flex;
-        align-items: flex-end;
-        padding: 1.25rem;
-        opacity: 0;
-        transition: opacity 0.8s ease; /* Slower fade */
-    }
-
-    .gallery__item:hover .gallery__item-overlay {
-        opacity: 1;
-    }
-
-    .gallery__item-tag {
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--gold-300);
-        background: rgba(10, 10, 10, 0.5);
-        backdrop-filter: blur(10px);
-        padding: 0.4rem 1rem;
-        border-radius: 50px;
-        border: 1px solid rgba(212, 175, 55, 0.25);
-    }
-
-    .gallery__item-border {
-        position: absolute;
-        inset: 0;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        pointer-events: none;
-        transition: border-color 0.8s ease;
-    }
-
-    .gallery__item:hover .gallery__item-border {
-        border-color: rgba(255, 255, 255, 0.3);
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-        .gallery__grid {
-            grid-template-columns: repeat(2, 1fr);
-            grid-auto-rows: 220px;
+    <style>
+        .gallery {
+            padding: var(--section-padding) 0;
+            position: relative;
         }
-    }
 
-    @media (max-width: 500px) {
-        .gallery__grid {
-            grid-template-columns: 1fr 1fr;
-            grid-auto-rows: 180px;
-            gap: 0.75rem;
+        /* Background accent */
+        .gallery::before {
+            content: "";
+            position: absolute;
+            top: 30%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(212, 175, 55, 0.04) 0%,
+                transparent 70%
+            );
+            filter: blur(80px);
+            pointer-events: none;
         }
-        /* Mobile adjustment for overlay visibility if desired, 
+
+        .gallery__header {
+            text-align: center;
+            margin-bottom: clamp(3rem, 6vw, 5rem);
+        }
+
+        .gallery__label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold-400);
+            margin-bottom: 1rem;
+        }
+
+        .gallery__title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .gallery__subtitle {
+            font-size: 0.95rem;
+            color: var(--silver-300);
+            font-weight: 300;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Masonry-like grid */
+        .gallery__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 200px;
+            gap: 1.25rem;
+        }
+
+        .gallery__item {
+            position: relative;
+            border-radius: 20px; /* Increased from 16px */
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery__item--tall {
+            grid-row: span 2;
+        }
+
+        .gallery__item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1); /* Slower animation */
+        }
+
+        .gallery__item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery__item-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                transparent 50%,
+                rgba(10, 10, 10, 0.8) 100%
+            );
+            display: flex;
+            align-items: flex-end;
+            padding: 1.25rem;
+            opacity: 0;
+            transition: opacity 0.8s ease; /* Slower fade */
+        }
+
+        .gallery__item:hover .gallery__item-overlay {
+            opacity: 1;
+        }
+
+        .gallery__item-tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold-300);
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        .gallery__item-border {
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            transition: border-color 0.8s ease;
+        }
+
+        .gallery__item:hover .gallery__item-border {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .gallery__grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 220px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .gallery__grid {
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: 180px;
+                gap: 0.75rem;
+            }
+            /* Mobile adjustment for overlay visibility if desired, 
            but user didn't explicitly ask for this one to be auto-revealed, 
            only Benefits. Keeping hover for now or it's fine. */
-    }
-</style>
+        }
+    </style>
+</section>

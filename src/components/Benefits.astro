@@ -1,5 +1,74 @@
 ---
 /* Benefits — Photo cards with text overlay, less text, more visual impact */
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const benefits = await reader.collections.benefits.all();
+
+const defaultBenefits = [
+    {
+        title: "Máximos Ingresos",
+        description: "Gana hasta 3x más que el promedio",
+        image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&h=500&fit=crop",
+        icon: "money",
+    },
+    {
+        title: "Tu Imagen",
+        description: "Asesoría profesional de belleza",
+        image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&h=400&fit=crop",
+        icon: "user",
+    },
+    {
+        title: "Equipos Pro",
+        description: "Cámaras HD y sets exclusivos",
+        image: "https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=500&h=400&fit=crop",
+        icon: "camera",
+    },
+    {
+        title: "Soporte 24/7",
+        description: "Coaches y equipo dedicado",
+        image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=500&h=400&fit=crop",
+        icon: "support",
+    },
+    {
+        title: "Transparencia",
+        description: "Reportes claros de tus ingresos",
+        image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&h=400&fit=crop",
+        icon: "eye",
+    },
+    {
+        title: "Privacidad Total",
+        description: "Tu identidad 100% protegida",
+        image: "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?w=800&h=500&fit=crop",
+        icon: "lock",
+    },
+];
+
+const items =
+    benefits.length > 0
+        ? benefits.map((item) => ({
+              title: item.entry.title,
+              description: item.entry.description,
+              image: item.entry.image,
+              icon: item.entry.icon,
+          }))
+        : defaultBenefits;
+
+// Icon mapping
+const iconPath = {
+    money: "M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z",
+    user: "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z",
+    camera: "rect:2,3,20,14,2,2|line:8,21,16,21|line:12,17,12,21", // Special handling needed for composite
+    support:
+        "path:M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2|circle:9,7,4|path:M23 21v-2a4 4 0 0 0-3-3.87|path:M16 3.13a4 4 0 0 1 0 7.75",
+    eye: "polyline:22 12 18 12 15 21 9 3 6 12 2 12",
+    lock: "path:M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z",
+    star: "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z",
+};
+
+/* Helper to render SVG paths/shapes based on simple string encoding I created above */
+/* Actually, simpler way: I'll just put the full SVG content in a switch/case in the HTML */
 ---
 
 <section class="benefits" id="servicios">
@@ -14,208 +83,83 @@
         </div>
 
         <div class="benefits__grid">
-            <!-- Card 1 — Hero card (large) -->
-            <div
-                class="benefits__card benefits__card--large reveal-scale"
-                data-delay="0"
-            >
-                <!-- CAMBIAR POR IMAGEN REAL -->
-                <img
-                    src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&h=500&fit=crop"
-                    alt="Máximos Ingresos"
-                    loading="lazy"
-                />
-                <div class="benefits__card-fog"></div>
-                <div class="benefits__card-overlay"></div>
-                <div class="benefits__card-border"></div>
-                <div class="benefits__card-content">
-                    <div class="benefits__card-icon">
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            ><path
-                                d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
-                            ></path></svg
-                        >
+            {
+                items.map((item, index) => (
+                    <div
+                        class={`benefits__card ${index % 5 === 0 ? "benefits__card--large" : ""} reveal-scale`}
+                        data-delay={index}
+                    >
+                        <img src={item.image} alt={item.title} loading="lazy" />
+                        <div class="benefits__card-fog" />
+                        <div class="benefits__card-overlay" />
+                        <div class="benefits__card-border" />
+                        <div class="benefits__card-content">
+                            <div class="benefits__card-icon">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                >
+                                    {item.icon === "money" && (
+                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                                    )}
+                                    {item.icon === "user" && (
+                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                                    )}
+                                    {item.icon === "camera" && (
+                                        <>
+                                            <rect
+                                                x="2"
+                                                y="3"
+                                                width="20"
+                                                height="14"
+                                                rx="2"
+                                                ry="2"
+                                            />
+                                            <line
+                                                x1="8"
+                                                y1="21"
+                                                x2="16"
+                                                y2="21"
+                                            />
+                                            <line
+                                                x1="12"
+                                                y1="17"
+                                                x2="12"
+                                                y2="21"
+                                            />
+                                        </>
+                                    )}
+                                    {item.icon === "support" && (
+                                        <>
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                            <circle cx="9" cy="7" r="4" />
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                        </>
+                                    )}
+                                    {item.icon === "eye" && (
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                    )}
+                                    {item.icon === "lock" && (
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    )}
+                                    {(item.icon === "star" || !item.icon) && (
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    )}
+                                </svg>
+                            </div>
+                            <h3 class="benefits__card-title">{item.title}</h3>
+                            <p class="benefits__card-text">
+                                {item.description}
+                            </p>
+                        </div>
                     </div>
-                    <h3 class="benefits__card-title">Máximos Ingresos</h3>
-                    <p class="benefits__card-text">
-                        Gana hasta 3x más que el promedio
-                    </p>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="benefits__card reveal-slide-left" data-delay="1">
-                <img
-                    src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&h=400&fit=crop"
-                    alt="Tu Imagen"
-                    loading="lazy"
-                />
-                <div class="benefits__card-fog"></div>
-                <div class="benefits__card-overlay"></div>
-                <div class="benefits__card-border"></div>
-                <div class="benefits__card-content">
-                    <div class="benefits__card-icon">
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            ><path
-                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                            ></path></svg
-                        >
-                    </div>
-                    <h3 class="benefits__card-title">Tu Imagen</h3>
-                    <p class="benefits__card-text">
-                        Asesoría profesional de belleza
-                    </p>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="benefits__card reveal-slide-right" data-delay="1">
-                <img
-                    src="https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=500&h=400&fit=crop"
-                    alt="Equipos Pro"
-                    loading="lazy"
-                />
-                <div class="benefits__card-fog"></div>
-                <div class="benefits__card-overlay"></div>
-                <div class="benefits__card-border"></div>
-                <div class="benefits__card-content">
-                    <div class="benefits__card-icon">
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            ><rect
-                                x="2"
-                                y="3"
-                                width="20"
-                                height="14"
-                                rx="2"
-                                ry="2"></rect><line
-                                x1="8"
-                                y1="21"
-                                x2="16"
-                                y2="21"></line><line
-                                x1="12"
-                                y1="17"
-                                x2="12"
-                                y2="21"></line></svg
-                        >
-                    </div>
-                    <h3 class="benefits__card-title">Equipos Pro</h3>
-                    <p class="benefits__card-text">
-                        Cámaras HD y sets exclusivos
-                    </p>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="benefits__card reveal-slide-left" data-delay="2">
-                <img
-                    src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=500&h=400&fit=crop"
-                    alt="Equipo Humano"
-                    loading="lazy"
-                />
-                <div class="benefits__card-fog"></div>
-                <div class="benefits__card-overlay"></div>
-                <div class="benefits__card-border"></div>
-                <div class="benefits__card-content">
-                    <div class="benefits__card-icon">
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            ><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
-                            ></path><circle cx="9" cy="7" r="4"></circle><path
-                                d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path
-                                d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg
-                        >
-                    </div>
-                    <h3 class="benefits__card-title">Soporte 24/7</h3>
-                    <p class="benefits__card-text">Coaches y equipo dedicado</p>
-                </div>
-            </div>
-
-            <!-- Card 5 -->
-            <div class="benefits__card reveal-slide-right" data-delay="2">
-                <img
-                    src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&h=400&fit=crop"
-                    alt="Resultados"
-                    loading="lazy"
-                />
-                <div class="benefits__card-fog"></div>
-                <div class="benefits__card-overlay"></div>
-                <div class="benefits__card-border"></div>
-                <div class="benefits__card-content">
-                    <div class="benefits__card-icon">
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            ><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"
-                            ></polyline></svg
-                        >
-                    </div>
-                    <h3 class="benefits__card-title">Transparencia</h3>
-                    <p class="benefits__card-text">
-                        Reportes claros de tus ingresos
-                    </p>
-                </div>
-            </div>
-
-            <!-- Card 6 — Large -->
-            <div
-                class="benefits__card benefits__card--large reveal-scale"
-                data-delay="3"
-            >
-                <img
-                    src="https://images.unsplash.com/photo-1596495577886-d920f1fb7238?w=800&h=500&fit=crop"
-                    alt="Privacidad"
-                    loading="lazy"
-                />
-                <div class="benefits__card-fog"></div>
-                <div class="benefits__card-overlay"></div>
-                <div class="benefits__card-border"></div>
-                <div class="benefits__card-content">
-                    <div class="benefits__card-icon">
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            ><path
-                                d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
-                            ></path></svg
-                        >
-                    </div>
-                    <h3 class="benefits__card-title">Privacidad Total</h3>
-                    <p class="benefits__card-text">
-                        Tu identidad 100% protegida
-                    </p>
-                </div>
-            </div>
+                ))
+            }
         </div>
     </div>
 </section>
