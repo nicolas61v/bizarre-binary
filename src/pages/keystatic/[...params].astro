@@ -1,10 +1,7 @@
 ---
-import { makePage } from "@keystatic/astro/ui";
-import keystaticConfig from "../../../keystatic.config";
+import KeystaticApp from "../../components/KeystaticApp";
 
 export const prerender = false;
-
-const Page = makePage(keystaticConfig);
 ---
 
-<Page client:only="react" />
+<KeystaticApp client:only="react" />
