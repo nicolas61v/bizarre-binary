@@ -1,9 +1,17 @@
 import { config, fields, singleton, collection } from '@keystatic/core';
 
 export default config({
+    // storage: {
+    //     kind: 'local',
+    // },
+    // PARA PRODUCCIÓN (VERCEL/GITHUB):
+    // Comenta la sección 'storage' de arriba y descomenta la de abajo cuando tengas tu repo conectado.
+    
     storage: {
-        kind: 'local',
+      kind: 'github',
+      repo: 'nicolas61v/bizarre-binary',
     },
+    
     singletons: {
         hero: singleton({
             label: 'Hero Section',
