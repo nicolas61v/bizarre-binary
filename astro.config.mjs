@@ -7,6 +7,7 @@ import keystatic from '@keystatic/astro';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://www.dejavuestudios.xyz',
   integrations: [react(), keystatic()],
   adapter: vercel()
 });
