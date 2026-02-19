@@ -1,1 +1,2 @@
-image: /imgs/hero/image.JPG
+images:
+  - /imgs/hero/image.JPG
