@@ -13,12 +13,18 @@ export default config({
                 title: fields.text({ label: 'Título', description: 'El título grande del inicio' }),
                 subtitle: fields.text({ label: 'Subtítulo', description: 'Texto pequeño arriba del título' }),
                 tagline: fields.text({ label: 'Frase destacada', description: 'Frase debajo del título' }),
-                image: fields.image({
-                    label: 'Foto Principal',
-                    description: 'La foto grande que aparece en el inicio',
-                    directory: 'public/imgs/hero',
-                    publicPath: '/imgs/hero/',
-                }),
+                images: fields.array(
+                    fields.image({
+                        label: 'Foto',
+                        directory: 'public/imgs/hero',
+                        publicPath: '/imgs/hero/',
+                    }),
+                    {
+                        label: 'Fotos del Carrusel',
+                        itemLabel: () => 'Foto',
+                        description: 'Agrega varias fotos — se irán pasando automáticamente',
+                    }
+                ),
             },
         }),
     },

@@ -88,6 +88,11 @@ const iconPath = {
                     <div
                         class={`benefits__card ${index % 5 === 0 ? "benefits__card--large" : ""} reveal-scale`}
                         data-delay={index}
+                        data-image={item.image}
+                        data-title={item.title}
+                        data-index={index}
+                        role="button"
+                        tabindex="0"
                     >
                         <img src={item.image} alt={item.title} loading="lazy" />
                         <div class="benefits__card-fog" />
@@ -164,35 +169,98 @@ const iconPath = {
     </div>
 </section>
 
-<script>
-    // Mobile auto-reveal text when in center of viewport
-    document.addEventListener("DOMContentLoaded", () => {
-        const cards = document.querySelectorAll(".benefits__card");
+<!-- Lightbox -->
+<div class="lightbox" id="benefits-lightbox" aria-modal="true" role="dialog" aria-hidden="true">
+    <button class="lightbox__close" aria-label="Cerrar">&times;</button>
+    <button class="lightbox__nav lightbox__nav--prev" aria-label="Anterior">&#8249;</button>
+    <button class="lightbox__nav lightbox__nav--next" aria-label="Siguiente">&#8250;</button>
+    <div class="lightbox__content">
+        <img class="lightbox__image" src="" alt="" />
+        <p class="lightbox__caption"></p>
+    </div>
+</div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const cards = Array.from(
+            document.querySelectorAll<HTMLElement>(".benefits__card"),
+        );
+        const lightbox = document.getElementById("benefits-lightbox");
+        const lbImg = lightbox?.querySelector<HTMLImageElement>(".lightbox__image");
+        const lbCaption = lightbox?.querySelector<HTMLElement>(".lightbox__caption");
+        let current = 0;
+
+        // ── Intersection observer (mobile reveal) ──
         if ("IntersectionObserver" in window) {
             const observer = new IntersectionObserver(
                 (entries) => {
                     entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add(
-                                "benefits__card--active",
-                            );
-                        } else {
-                            entry.target.classList.remove(
-                                "benefits__card--active",
-                            );
-                        }
+                        entry.target.classList.toggle(
+                            "benefits__card--active",
+                            entry.isIntersecting,
+                        );
                     });
                 },
                 {
                     root: null,
-                    threshold: 0.6, // Trigger when 60% visible
-                    rootMargin: "-10% 0px -10% 0px", // Focus on the middle of screen
+                    threshold: 0.6,
+                    rootMargin: "-10% 0px -10% 0px",
                 },
             );
-
             cards.forEach((card) => observer.observe(card));
         }
+
+        // ── Lightbox ──
+        function openAt(index: number) {
+            if (!lightbox || !lbImg || !lbCaption) return;
+            current = index;
+            const card = cards[current];
+            lbImg.src = card.dataset.image || "";
+            lbImg.alt = card.dataset.title || "";
+            lbCaption.textContent = card.dataset.title || "";
+            lightbox.setAttribute("aria-hidden", "false");
+            lightbox.classList.add("lightbox--open");
+            document.body.style.overflow = "hidden";
+        }
+
+        function close() {
+            if (!lightbox) return;
+            lightbox.classList.remove("lightbox--open");
+            lightbox.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+        }
+
+        function navigate(dir: number) {
+            openAt((current + dir + cards.length) % cards.length);
+        }
+
+        cards.forEach((card, i) => {
+            card.addEventListener("click", () => openAt(i));
+            card.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") openAt(i);
+            });
+        });
+
+        lightbox
+            ?.querySelector(".lightbox__close")
+            ?.addEventListener("click", close);
+        lightbox
+            ?.querySelector(".lightbox__nav--prev")
+            ?.addEventListener("click", () => navigate(-1));
+        lightbox
+            ?.querySelector(".lightbox__nav--next")
+            ?.addEventListener("click", () => navigate(1));
+
+        lightbox?.addEventListener("click", (e) => {
+            if (e.target === lightbox) close();
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (!lightbox?.classList.contains("lightbox--open")) return;
+            if (e.key === "Escape") close();
+            if (e.key === "ArrowLeft") navigate(-1);
+            if (e.key === "ArrowRight") navigate(1);
+        });
     });
 </script>
 
@@ -417,12 +485,131 @@ const iconPath = {
         /* On mobile, standard state might be slightly visible or fully handled by JS */
         .benefits__card-content {
             padding: 1.5rem;
-            /* On very small screens, maybe show a hint? 
+            /* On very small screens, maybe show a hint?
          But JS will handle the full reveal. */
         }
 
         .benefits__card-title {
             font-size: 1.2rem;
+        }
+    }
+
+    /* ─── Lightbox ─── */
+    :global(.lightbox) {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.95);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    :global(.lightbox--open) {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    :global(.lightbox__content) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        max-width: 90vw;
+        max-height: 90vh;
+    }
+
+    :global(.lightbox__image) {
+        max-width: 100%;
+        max-height: 80vh;
+        object-fit: contain;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        transition: opacity 0.2s ease;
+    }
+
+    :global(.lightbox__caption) {
+        color: var(--white);
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-align: center;
+    }
+
+    :global(.lightbox__close) {
+        position: fixed;
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--white);
+        font-size: 1.5rem;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        z-index: 10;
+    }
+
+    :global(.lightbox__close:hover) {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    :global(.lightbox__nav) {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--white);
+        font-size: 2.5rem;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        z-index: 10;
+    }
+
+    :global(.lightbox__nav:hover) {
+        background: rgba(212, 175, 55, 0.2);
+        border-color: var(--gold-300);
+        color: var(--gold-300);
+    }
+
+    :global(.lightbox__nav--prev) {
+        left: 1.5rem;
+    }
+
+    :global(.lightbox__nav--next) {
+        right: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+        :global(.lightbox__nav--prev) {
+            left: 0.5rem;
+        }
+        :global(.lightbox__nav--next) {
+            right: 0.5rem;
+        }
+        :global(.lightbox__nav) {
+            width: 40px;
+            height: 40px;
+            font-size: 2rem;
         }
     }
 </style>

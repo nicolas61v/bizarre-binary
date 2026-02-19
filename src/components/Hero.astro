@@ -6,9 +6,13 @@ import keystaticConfig from "../../keystatic.config";
 const reader = createReader(process.cwd(), keystaticConfig);
 const heroContent = await reader.singletons.hero.read();
 
-const defaultImage =
-    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop&crop=face";
-const heroImage = heroContent?.image ? heroContent.image : defaultImage;
+const defaultImages = [
+    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop&crop=face",
+];
+const heroImages =
+    heroContent?.images && heroContent.images.length > 0
+        ? heroContent.images
+        : defaultImages;
 const heroSubtitle = heroContent?.subtitle || "Dejavu Estudios";
 const heroTagline = heroContent?.tagline || "Studio de Modelaje Webcam";
 const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
@@ -85,15 +89,28 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
         <!-- Right: Image -->
         <div class="hero__image-wrap">
             <div class="hero__image-frame">
-                <!-- CAMBIAR ESTA RUTA POR TU IMAGEN REAL -->
-                <img
-                    src={heroImage}
-                    alt={heroTitle}
-                    class="hero__image"
-                    loading="eager"
-                />
+                {heroImages.map((img, i) => (
+                    <img
+                        src={img}
+                        alt={heroTitle}
+                        class={`hero__image ${i === 0 ? "hero__image--active" : ""}`}
+                        loading={i === 0 ? "eager" : "lazy"}
+                        data-index={i}
+                    />
+                ))}
                 <div class="hero__image-overlay"></div>
                 <div class="hero__image-border"></div>
+                {heroImages.length > 1 && (
+                    <div class="hero__image-dots">
+                        {heroImages.map((_, i) => (
+                            <button
+                                class={`hero__dot ${i === 0 ? "hero__dot--active" : ""}`}
+                                data-index={i}
+                                aria-label={`Foto ${i + 1}`}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
             <!-- Floating accent elements -->
             <div class="hero__float hero__float--1">✦</div>
@@ -109,6 +126,44 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
         </div>
     </div>
 </section>
+
+<script>
+    const slides = document.querySelectorAll<HTMLImageElement>(".hero__image");
+    const dots = document.querySelectorAll<HTMLButtonElement>(".hero__dot");
+
+    if (slides.length > 1) {
+        let current = 0;
+        let autoplay: ReturnType<typeof setInterval>;
+
+        function goTo(index: number) {
+            slides[current].classList.remove("hero__image--active");
+            dots[current]?.classList.remove("hero__dot--active");
+            current = index;
+            slides[current].classList.add("hero__image--active");
+            dots[current]?.classList.add("hero__dot--active");
+        }
+
+        function next() {
+            goTo((current + 1) % slides.length);
+        }
+
+        autoplay = setInterval(next, 5000);
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener("click", () => {
+                clearInterval(autoplay);
+                goTo(i);
+                autoplay = setInterval(next, 5000);
+            });
+        });
+
+        const frame = document.querySelector(".hero__image-frame");
+        frame?.addEventListener("mouseenter", () => clearInterval(autoplay));
+        frame?.addEventListener("mouseleave", () => {
+            autoplay = setInterval(next, 5000);
+        });
+    }
+</script>
 
 <style>
     /* ═══════════════════════════════════════════
@@ -632,14 +687,55 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
     }
 
     .hero__image {
+        position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.8s var(--ease-out-expo);
+        opacity: 0;
+        transition:
+            opacity 0.9s ease,
+            transform 0.8s var(--ease-out-expo);
     }
 
-    .hero__image-frame:hover .hero__image {
+    .hero__image--active {
+        opacity: 1;
+    }
+
+    .hero__image-frame:hover .hero__image--active {
         transform: scale(1.05);
+    }
+
+    /* ─── Carousel Dots ─── */
+    .hero__image-dots {
+        position: absolute;
+        bottom: 1.25rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.5rem;
+        z-index: 4;
+    }
+
+    .hero__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        background: transparent;
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.3s ease;
+    }
+
+    .hero__dot--active {
+        background: var(--gold-300);
+        border-color: var(--gold-300);
+        transform: scale(1.25);
+    }
+
+    .hero__dot:hover:not(.hero__dot--active) {
+        background: rgba(255, 255, 255, 0.4);
     }
 
     .hero__image-overlay {
