@@ -239,6 +239,15 @@
         font-weight: 300;
     }
 
+    @media (max-width: 768px) {
+        .cta__glow {
+            filter: blur(50px);
+        }
+        .cta__line {
+            display: none;
+        }
+    }
+
     @media (max-width: 600px) {
         .cta__actions {
             flex-direction: column;

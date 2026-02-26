@@ -232,6 +232,12 @@ const colCount = items.length <= 2 ? items.length : items.length === 3 ? 3 : 4;
             }
         }
 
+        @media (max-width: 768px) {
+            .gallery::before {
+                filter: blur(40px);
+            }
+        }
+
         @media (max-width: 500px) {
             .gallery__grid {
                 grid-template-columns: 1fr 1fr;

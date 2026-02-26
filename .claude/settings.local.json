@@ -7,7 +7,12 @@
       "Bash(git push:*)",
       "Bash(git stash:*)",
       "Bash(git pull:*)",
-      "Bash(ffmpeg:*)"
+      "Bash(ffmpeg:*)",
+      "Bash(find:*)",
+      "Bash(where ffmpeg:*)",
+      "Bash(cmd.exe:*)",
+      "Bash(npm run:*)",
+      "Bash(powershell.exe:*)"
     ]
   }
 }
