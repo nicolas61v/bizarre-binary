@@ -90,6 +90,25 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
     </div>
 </section>
 
+<script>
+    const video = document.querySelector<HTMLVideoElement>(".hero__video");
+    const hero  = document.querySelector<HTMLElement>("#inicio");
+
+    if (video && hero) {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+            },
+            { threshold: 0.1 }   // pausa cuando menos del 10% del hero es visible
+        );
+        observer.observe(hero);
+    }
+</script>
+
 <style>
     /* ═══════════════════════════════════════════
      HERO SECTION
