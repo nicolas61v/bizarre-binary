@@ -302,11 +302,12 @@ const iconPath = {
     /* Card */
     .benefits__card {
         position: relative;
-        border-radius: 24px; /* More rounded as requested */
+        border-radius: 24px;
         overflow: hidden;
         cursor: pointer;
         aspect-ratio: 4 / 3;
         isolation: isolate;
+        contain: layout style;
     }
 
     .benefits__card--large {
@@ -318,7 +319,8 @@ const iconPath = {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1); /* SLOWER animation */
+        will-change: transform;
+        transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1);
     }
 
     /* Zoom on active/hover */
@@ -358,26 +360,18 @@ const iconPath = {
         inset: 0;
         background: linear-gradient(
             0deg,
-            rgba(10, 10, 10, 0.95) 0%,
-            rgba(10, 10, 10, 0.5) 40%,
-            transparent 80%
+            rgba(10, 10, 10, 0.95) 10%,
+            rgba(10, 10, 10, 0.6) 50%,
+            transparent 90%
         );
         pointer-events: none;
         opacity: 0.6;
-        transition:
-            opacity 1s ease,
-            background 1s ease;
+        transition: opacity 0.9s ease;
     }
 
     .benefits__card:hover .benefits__card-overlay,
     .benefits__card.benefits__card--active .benefits__card-overlay {
         opacity: 1;
-        background: linear-gradient(
-            0deg,
-            rgba(10, 10, 10, 0.95) 10%,
-            rgba(10, 10, 10, 0.6) 50%,
-            transparent 90%
-        );
     }
 
     /* Border */
@@ -406,6 +400,7 @@ const iconPath = {
         z-index: 3;
         transform: translateY(20px);
         opacity: 0;
+        will-change: transform, opacity;
         transition:
             transform 1.2s cubic-bezier(0.19, 1, 0.22, 1),
             opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1);
@@ -425,17 +420,19 @@ const iconPath = {
         align-items: center;
         justify-content: center;
         border-radius: 12px;
-        background: rgba(212, 175, 55, 0.1);
+        background: rgba(212, 175, 55, 0.15);
         border: 1px solid rgba(212, 175, 55, 0.3);
         color: var(--gold-300);
         margin-bottom: 1rem;
-        backdrop-filter: blur(8px);
-        transition: all 1s ease;
+        transition:
+            background 0.8s ease,
+            box-shadow 0.8s ease,
+            border-color 0.8s ease;
     }
 
     .benefits__card:hover .benefits__card-icon,
     .benefits__card.benefits__card--active .benefits__card-icon {
-        background: rgba(212, 175, 55, 0.25);
+        background: rgba(212, 175, 55, 0.28);
         box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
         border-color: var(--gold-400);
     }
