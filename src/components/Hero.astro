@@ -1,26 +1,29 @@
 ---
-/* Hero — Split layout with image, enhanced animations, gold particles */
 import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "../../keystatic.config";
 
 const reader = createReader(process.cwd(), keystaticConfig);
 const heroContent = await reader.singletons.hero.read();
 
-const defaultImages = [
-    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop&crop=face",
-];
-const heroImages =
-    heroContent?.images && heroContent.images.length > 0
-        ? heroContent.images
-        : defaultImages;
 const heroSubtitle = heroContent?.subtitle || "Dejavu Estudios";
 const heroTagline = heroContent?.tagline || "Studio de Modelaje Webcam";
 const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
 ---
 
 <section class="hero" id="inicio">
-    <!-- CSS Bokeh Background -->
+    <!-- Background -->
     <div class="hero__bg">
+        <video
+            class="hero__video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            aria-hidden="true"
+        >
+            <source src="/VIDEO/hero-Bg.mp4" type="video/mp4" />
+        </video>
         <div class="hero__bg-gradient"></div>
         <div class="hero__bokeh hero__bokeh--1"></div>
         <div class="hero__bokeh hero__bokeh--2"></div>
@@ -29,7 +32,7 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
         <div class="hero__bokeh hero__bokeh--5"></div>
     </div>
 
-    <!-- Animated Gold Particles -->
+    <!-- Particles -->
     <div class="hero__particles" aria-hidden="true">
         <span class="particle particle--1"></span>
         <span class="particle particle--2"></span>
@@ -47,74 +50,34 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
 
     <!-- Content -->
     <div class="hero__content container">
-        <!-- Left: Text -->
-        <div class="hero__text">
-            <div class="hero__card-line"></div>
-
-            <p class="hero__subtitle">{heroSubtitle}</p>
-
-            <h1 class="hero__title">
-                {heroTitle}
-            </h1>
-
-            <p class="hero__tagline">{heroTagline}</p>
-
-            <p class="hero__description">
-                Maximiza tus ingresos con el respaldo de un equipo profesional.
-                Estrategia, herramientas y acompañamiento para que ganes más.
-            </p>
-
-            <div class="hero__actions">
-                <a href="#contacto" class="hero__btn hero__btn--primary">
-                    <span>Empieza a Ganar</span>
-                    <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path d="M5 12h14M12 5l7 7-7 7"></path>
-                    </svg>
-                </a>
-                <a href="#servicios" class="hero__btn hero__btn--secondary">
-                    Conoce Más
-                </a>
-            </div>
-        </div>
-
-        <!-- Right: Image -->
-        <div class="hero__image-wrap">
-            <div class="hero__image-frame">
-                {heroImages.map((img, i) => (
-                    <img
-                        src={img}
-                        alt={heroTitle}
-                        class={`hero__image ${i === 0 ? "hero__image--active" : ""}`}
-                        loading={i === 0 ? "eager" : "lazy"}
-                        data-index={i}
-                    />
-                ))}
-                <div class="hero__image-overlay"></div>
-                <div class="hero__image-border"></div>
-                {heroImages.length > 1 && (
-                    <div class="hero__image-dots">
-                        {heroImages.map((_, i) => (
-                            <button
-                                class={`hero__dot ${i === 0 ? "hero__dot--active" : ""}`}
-                                data-index={i}
-                                aria-label={`Foto ${i + 1}`}
-                            />
-                        ))}
-                    </div>
-                )}
-            </div>
-            <!-- Floating accent elements -->
-            <div class="hero__float hero__float--1">✦</div>
-            <div class="hero__float hero__float--2"></div>
+        <div class="hero__card-line"></div>
+        <p class="hero__subtitle">{heroSubtitle}</p>
+        <h1 class="hero__title">{heroTitle}</h1>
+        <p class="hero__tagline">{heroTagline}</p>
+        <p class="hero__description">
+            Maximiza tus ingresos con el respaldo de un equipo profesional.
+            Estrategia, herramientas y acompañamiento para que ganes más.
+        </p>
+        <div class="hero__actions">
+            <a href="#contacto" class="hero__btn hero__btn--primary">
+                <span>Empieza a Ganar</span>
+                <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </a>
+            <a href="#servicios" class="hero__btn hero__btn--secondary">
+                Conoce Más
+            </a>
         </div>
     </div>
 
@@ -127,48 +90,10 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
     </div>
 </section>
 
-<script>
-    const slides = document.querySelectorAll<HTMLImageElement>(".hero__image");
-    const dots = document.querySelectorAll<HTMLButtonElement>(".hero__dot");
-
-    if (slides.length > 1) {
-        let current = 0;
-        let autoplay: ReturnType<typeof setInterval>;
-
-        function goTo(index: number) {
-            slides[current].classList.remove("hero__image--active");
-            dots[current]?.classList.remove("hero__dot--active");
-            current = index;
-            slides[current].classList.add("hero__image--active");
-            dots[current]?.classList.add("hero__dot--active");
-        }
-
-        function next() {
-            goTo((current + 1) % slides.length);
-        }
-
-        autoplay = setInterval(next, 5000);
-
-        dots.forEach((dot, i) => {
-            dot.addEventListener("click", () => {
-                clearInterval(autoplay);
-                goTo(i);
-                autoplay = setInterval(next, 5000);
-            });
-        });
-
-        const frame = document.querySelector(".hero__image-frame");
-        frame?.addEventListener("mouseenter", () => clearInterval(autoplay));
-        frame?.addEventListener("mouseleave", () => {
-            autoplay = setInterval(next, 5000);
-        });
-    }
-</script>
-
 <style>
     /* ═══════════════════════════════════════════
      HERO SECTION
-  ═══════════════════════════════════════════ */
+    ═══════════════════════════════════════════ */
     .hero {
         position: relative;
         width: 100%;
@@ -186,111 +111,72 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
         z-index: 0;
     }
 
+    .hero__video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero__video { display: none; }
+    }
+
     .hero__bg-gradient {
         position: absolute;
         inset: 0;
         background:
-            radial-gradient(
-                ellipse 80% 60% at 50% 40%,
-                rgba(212, 175, 55, 0.06) 0%,
-                transparent 70%
-            ),
-            radial-gradient(
-                ellipse 50% 40% at 85% 20%,
-                rgba(212, 175, 55, 0.04) 0%,
-                transparent 50%
-            ),
-            linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 40%, #0a0a0a 100%);
+            radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
+            radial-gradient(ellipse 50% 40% at 85% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+            linear-gradient(180deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.55) 40%, rgba(10,10,10,0.82) 100%);
     }
 
-    /* Bokeh circles */
+    /* ─── Bokeh ─── */
     .hero__bokeh {
         position: absolute;
         border-radius: 50%;
         filter: blur(70px);
         opacity: 0;
+        will-change: transform, opacity;
         animation: bokehPulse 10s ease-in-out infinite;
     }
 
     .hero__bokeh--1 {
-        width: 350px;
-        height: 350px;
-        top: 10%;
-        left: 10%;
-        background: radial-gradient(
-            circle,
-            rgba(212, 175, 55, 0.12),
-            transparent 70%
-        );
-        animation-delay: 0s;
+        width: 350px; height: 350px;
+        top: 10%; left: 10%;
+        background: radial-gradient(circle, rgba(212,175,55,0.12), transparent 70%);
     }
     .hero__bokeh--2 {
-        width: 250px;
-        height: 250px;
-        top: 55%;
-        right: 5%;
-        background: radial-gradient(
-            circle,
-            rgba(212, 175, 55, 0.08),
-            transparent 70%
-        );
+        width: 250px; height: 250px;
+        top: 55%; right: 5%;
+        background: radial-gradient(circle, rgba(212,175,55,0.08), transparent 70%);
         animation-delay: 2.5s;
     }
     .hero__bokeh--3 {
-        width: 200px;
-        height: 200px;
-        bottom: 15%;
-        left: 35%;
-        background: radial-gradient(
-            circle,
-            rgba(212, 175, 55, 0.08),
-            transparent 70%
-        );
+        width: 200px; height: 200px;
+        bottom: 15%; left: 35%;
+        background: radial-gradient(circle, rgba(212,175,55,0.08), transparent 70%);
         animation-delay: 5s;
     }
     .hero__bokeh--4 {
-        width: 280px;
-        height: 280px;
-        top: 25%;
-        right: 25%;
-        background: radial-gradient(
-            circle,
-            rgba(255, 255, 255, 0.03),
-            transparent 70%
-        );
+        width: 280px; height: 280px;
+        top: 25%; right: 25%;
+        background: radial-gradient(circle, rgba(255,255,255,0.03), transparent 70%);
         animation-delay: 3.5s;
     }
     .hero__bokeh--5 {
-        width: 180px;
-        height: 180px;
-        bottom: 30%;
-        right: 15%;
-        background: radial-gradient(
-            circle,
-            rgba(212, 175, 55, 0.06),
-            transparent 70%
-        );
+        width: 180px; height: 180px;
+        bottom: 30%; right: 15%;
+        background: radial-gradient(circle, rgba(212,175,55,0.06), transparent 70%);
         animation-delay: 7s;
     }
 
     @keyframes bokehPulse {
-        0%,
-        100% {
-            opacity: 0.25;
-            transform: scale(1) translate(0, 0);
-        }
-        25% {
-            opacity: 0.5;
-            transform: scale(1.1) translate(5px, -5px);
-        }
-        50% {
-            opacity: 0.6;
-            transform: scale(1.18) translate(-3px, 8px);
-        }
-        75% {
-            opacity: 0.4;
-            transform: scale(1.05) translate(4px, 3px);
-        }
+        0%, 100% { opacity: 0.25; transform: scale(1) translate(0, 0); }
+        25%       { opacity: 0.5;  transform: scale(1.1) translate(5px, -5px); }
+        50%       { opacity: 0.6;  transform: scale(1.18) translate(-3px, 8px); }
+        75%       { opacity: 0.4;  transform: scale(1.05) translate(4px, 3px); }
     }
 
     /* ─── Particles ─── */
@@ -299,276 +185,101 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
         inset: 0;
         z-index: 1;
         pointer-events: none;
+        contain: layout style;
     }
 
     .particle {
         position: absolute;
         border-radius: 50%;
         opacity: 0;
+        will-change: transform, opacity;
         animation: particleFloat linear infinite;
     }
 
-    .particle--1 {
-        left: 8%;
-        bottom: -5%;
-        animation-duration: 14s;
-        animation-delay: 0s;
-        width: 2px;
-        height: 2px;
-        background: var(--gold-300);
-    }
-    .particle--2 {
-        left: 20%;
-        bottom: -5%;
-        animation-duration: 18s;
-        animation-delay: 2s;
-        width: 3px;
-        height: 3px;
-        background: var(--gold-300);
-    }
-    .particle--3 {
-        left: 32%;
-        bottom: -5%;
-        animation-duration: 12s;
-        animation-delay: 4s;
-        width: 2px;
-        height: 2px;
-        background: var(--silver-200);
-    }
-    .particle--4 {
-        left: 44%;
-        bottom: -5%;
-        animation-duration: 16s;
-        animation-delay: 1s;
-        width: 3px;
-        height: 3px;
-        background: var(--gold-300);
-    }
-    .particle--5 {
-        left: 55%;
-        bottom: -5%;
-        animation-duration: 13s;
-        animation-delay: 3s;
-        width: 2px;
-        height: 2px;
-        background: var(--silver-200);
-    }
-    .particle--6 {
-        left: 66%;
-        bottom: -5%;
-        animation-duration: 15s;
-        animation-delay: 5.5s;
-        width: 3px;
-        height: 3px;
-        background: var(--gold-300);
-    }
-    .particle--7 {
-        left: 77%;
-        bottom: -5%;
-        animation-duration: 17s;
-        animation-delay: 1.5s;
-        width: 2px;
-        height: 2px;
-        background: var(--gold-300);
-    }
-    .particle--8 {
-        left: 88%;
-        bottom: -5%;
-        animation-duration: 14s;
-        animation-delay: 4.5s;
-        width: 3px;
-        height: 3px;
-        background: var(--silver-200);
-    }
-    .particle--9 {
-        left: 15%;
-        bottom: -5%;
-        animation-duration: 16s;
-        animation-delay: 6s;
-        width: 2px;
-        height: 2px;
-        background: var(--gold-300);
-    }
-    .particle--10 {
-        left: 50%;
-        bottom: -5%;
-        animation-duration: 13s;
-        animation-delay: 7s;
-        width: 4px;
-        height: 4px;
-        background: var(--gold-300);
-    }
-    .particle--11 {
-        left: 72%;
-        bottom: -5%;
-        animation-duration: 19s;
-        animation-delay: 2.5s;
-        width: 2px;
-        height: 2px;
-        background: var(--silver-200);
-    }
-    .particle--12 {
-        left: 38%;
-        bottom: -5%;
-        animation-duration: 15s;
-        animation-delay: 8s;
-        width: 2px;
-        height: 2px;
-        background: var(--gold-300);
-    }
+    .particle--1  { left: 8%;  bottom: -5%; animation-duration: 14s; animation-delay: 0s;   width: 2px; height: 2px; background: var(--gold-300); }
+    .particle--2  { left: 20%; bottom: -5%; animation-duration: 18s; animation-delay: 2s;   width: 3px; height: 3px; background: var(--gold-300); }
+    .particle--3  { left: 32%; bottom: -5%; animation-duration: 12s; animation-delay: 4s;   width: 2px; height: 2px; background: var(--silver-200); }
+    .particle--4  { left: 44%; bottom: -5%; animation-duration: 16s; animation-delay: 1s;   width: 3px; height: 3px; background: var(--gold-300); }
+    .particle--5  { left: 55%; bottom: -5%; animation-duration: 13s; animation-delay: 3s;   width: 2px; height: 2px; background: var(--silver-200); }
+    .particle--6  { left: 66%; bottom: -5%; animation-duration: 15s; animation-delay: 5.5s; width: 3px; height: 3px; background: var(--gold-300); }
+    .particle--7  { left: 77%; bottom: -5%; animation-duration: 17s; animation-delay: 1.5s; width: 2px; height: 2px; background: var(--gold-300); }
+    .particle--8  { left: 88%; bottom: -5%; animation-duration: 14s; animation-delay: 4.5s; width: 3px; height: 3px; background: var(--silver-200); }
+    .particle--9  { left: 15%; bottom: -5%; animation-duration: 16s; animation-delay: 6s;   width: 2px; height: 2px; background: var(--gold-300); }
+    .particle--10 { left: 50%; bottom: -5%; animation-duration: 13s; animation-delay: 7s;   width: 4px; height: 4px; background: var(--gold-300); }
+    .particle--11 { left: 72%; bottom: -5%; animation-duration: 19s; animation-delay: 2.5s; width: 2px; height: 2px; background: var(--silver-200); }
+    .particle--12 { left: 38%; bottom: -5%; animation-duration: 15s; animation-delay: 8s;   width: 2px; height: 2px; background: var(--gold-300); }
 
     @keyframes particleFloat {
-        0% {
-            transform: translateY(0) translateX(0) scale(1);
-            opacity: 0;
-        }
-        8% {
-            opacity: 0.9;
-        }
-        30% {
-            transform: translateY(-30vh) translateX(15px) scale(0.8);
-            opacity: 0.5;
-        }
-        60% {
-            transform: translateY(-65vh) translateX(-10px) scale(1.1);
-            opacity: 0.7;
-        }
-        100% {
-            transform: translateY(-115vh) translateX(20px) scale(0.6);
-            opacity: 0;
-        }
+        0%   { transform: translateY(0) translateX(0) scale(1);          opacity: 0; }
+        8%   {                                                             opacity: 0.9; }
+        30%  { transform: translateY(-30vh) translateX(15px) scale(0.8); opacity: 0.5; }
+        60%  { transform: translateY(-65vh) translateX(-10px) scale(1.1); opacity: 0.7; }
+        100% { transform: translateY(-115vh) translateX(20px) scale(0.6); opacity: 0; }
     }
 
-    /* ─── Content (Split Layout) ─── */
+    /* ─── Content (Centered) ─── */
     .hero__content {
         position: relative;
         z-index: 2;
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* 50% 50% split */
-        align-items: center; /* Vertically center */
-        gap: 4rem; /* Increased gap for better separation */
-        padding-top: 120px; /* More breathing room from top */
-        padding-bottom: 80px;
-        min-height: 100vh;
-        max-width: 1200px; /* Contain content width */
-        margin: 0 auto;
-    }
-
-    /* ─── Text Side ─── */
-    .hero__text {
         display: flex;
         flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-top: 120px;
+        padding-bottom: 80px;
+        min-height: 100vh;
         justify-content: center;
-        align-items: flex-start; /* Left align explicitly */
-        padding-right: 2rem; /* Spacing from image */
+        max-width: 800px;
     }
 
+    /* ─── Decorative line ─── */
     .hero__card-line {
-        width: 60px; /* Slightly longer */
-        height: 2px; /* Slightly thicker */
+        width: 60px;
+        height: 2px;
         margin-bottom: 2.5rem;
-        background: linear-gradient(
-            90deg,
-            var(--gold-300),
-            transparent
-        ); /* Gold to transparent */
+        background: linear-gradient(90deg, transparent, var(--gold-300), transparent);
+        transform-origin: center;
         animation: lineSlideIn 1.5s var(--ease-out-expo) both;
         animation-delay: 0.2s;
     }
 
     @keyframes lineSlideIn {
-        from {
-            opacity: 0;
-            width: 0;
-        }
-        to {
-            opacity: 1;
-            width: 60px;
-        }
+        from { opacity: 0; transform: scaleX(0); }
+        to   { opacity: 1; transform: scaleX(1); }
     }
 
     .hero__subtitle {
-        font-family: var(--font-body);
-        font-size: 0.85rem; /* Larger for readability */
+        font-size: 0.85rem;
         font-weight: 500;
         letter-spacing: 0.35em;
         text-transform: uppercase;
-        color: var(--gold-300); /* Use new metallic gold */
+        color: var(--gold-300);
         margin-bottom: 1.5rem;
-        animation: fadeSlideRight 1.2s var(--ease-out-expo) both;
+        animation: fadeSlideUp 1.2s var(--ease-out-expo) both;
         animation-delay: 0.4s;
-    }
-
-    @keyframes fadeSlideRight {
-        from {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
     }
 
     .hero__title {
         font-family: var(--font-display);
-        font-size: clamp(3rem, 5vw, 4.5rem); /* Larger title */
+        font-size: clamp(3rem, 6vw, 5.5rem);
         font-weight: 700;
         line-height: 1.1;
         color: var(--white);
         margin-bottom: 1.5rem;
-    }
-
-    .hero__title-line {
-        display: block;
-        overflow: hidden;
-    }
-
-    .hero__title-line {
-        animation: titleReveal 1s var(--ease-out-expo) both;
+        animation: fadeSlideUp 1.2s var(--ease-out-expo) both;
         animation-delay: 0.6s;
     }
 
-    .hero__title-line--delay {
-        animation-delay: 0.8s;
-    }
-
-    .hero__title-accent {
-        background: linear-gradient(
-            135deg,
-            var(--gold-200) 0%,
-            var(--gold-300) 50%,
-            var(--gold-500) 100%
-        ); /* Richer gradient */
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    @keyframes titleReveal {
-        from {
-            opacity: 0;
-            transform: translateY(100%);
-            filter: blur(4px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-            filter: blur(0);
-        }
-    }
-
     .hero__tagline {
-        font-family: var(--font-body);
         font-size: 1rem;
         font-weight: 300;
         letter-spacing: 0.15em;
         text-transform: uppercase;
         color: var(--silver-200);
         margin-bottom: 2rem;
-        padding-left: 2px; /* Alignment tweak */
-        border-left: 1px solid var(--gold-500); /* Subtle line */
-        padding-left: 1rem;
+        border-left: none;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        padding-bottom: 2rem;
         animation: fadeSlideUp 1.2s var(--ease-out-expo) both;
         animation-delay: 0.8s;
     }
@@ -576,7 +287,7 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
     .hero__description {
         font-size: 1.05rem;
         color: var(--silver-100);
-        max-width: 480px; /* Limit line length for readability */
+        max-width: 560px;
         margin-bottom: 2.5rem;
         line-height: 1.7;
         font-weight: 300;
@@ -588,6 +299,7 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
     .hero__actions {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 1.5rem;
         flex-wrap: wrap;
         animation: fadeSlideUp 1.2s var(--ease-out-expo) both;
@@ -595,17 +307,11 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
     }
 
     @keyframes fadeSlideUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Buttons */
+    /* ─── Buttons ─── */
     .hero__btn {
         display: inline-flex;
         align-items: center;
@@ -621,25 +327,15 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
 
     .hero__btn--primary {
         color: var(--black);
-        background: linear-gradient(
-            135deg,
-            var(--gold-300) 0%,
-            var(--gold-400) 100%
-        );
+        background: linear-gradient(135deg, var(--gold-300) 0%, var(--gold-400) 100%);
         box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
     }
-
     .hero__btn--primary:hover {
         transform: translateY(-2px) scale(1.03);
         box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
     }
-
-    .hero__btn--primary svg {
-        transition: transform var(--transition-base);
-    }
-    .hero__btn--primary:hover svg {
-        transform: translateX(5px);
-    }
+    .hero__btn--primary svg { transition: transform var(--transition-base); }
+    .hero__btn--primary:hover svg { transform: translateX(5px); }
 
     .hero__btn--secondary {
         color: var(--white);
@@ -647,155 +343,10 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
         border: 1px solid rgba(255, 255, 255, 0.25);
         backdrop-filter: blur(8px);
     }
-
     .hero__btn--secondary:hover {
         background: rgba(255, 255, 255, 0.12);
         border-color: rgba(255, 255, 255, 0.4);
         transform: translateY(-2px);
-    }
-
-    /* ─── Image Side ─── */
-    .hero__image-wrap {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        animation: imageEnter 1.8s cubic-bezier(0.22, 1, 0.36, 1) both; /* Slower, dramatic entrance */
-        animation-delay: 0.3s;
-    }
-
-    @keyframes imageEnter {
-        from {
-            opacity: 0;
-            transform: translateX(40px) scale(0.95); /* Slide from right + scale */
-            filter: blur(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0) scale(1);
-            filter: blur(0);
-        }
-    }
-
-    .hero__image-frame {
-        position: relative;
-        width: clamp(300px, 90%, 480px); /* Larger image */
-        aspect-ratio: 3 / 4;
-        border-radius: 24px; /* Matches new style */
-        overflow: hidden;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); /* Deep shadow */
-    }
-
-    .hero__image {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0;
-        transition:
-            opacity 0.9s ease,
-            transform 0.8s var(--ease-out-expo);
-    }
-
-    .hero__image--active {
-        opacity: 1;
-    }
-
-    .hero__image-frame:hover .hero__image--active {
-        transform: scale(1.05);
-    }
-
-    /* ─── Carousel Dots ─── */
-    .hero__image-dots {
-        position: absolute;
-        bottom: 1.25rem;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 0.5rem;
-        z-index: 4;
-    }
-
-    .hero__dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        background: transparent;
-        cursor: pointer;
-        padding: 0;
-        transition: all 0.3s ease;
-    }
-
-    .hero__dot--active {
-        background: var(--gold-300);
-        border-color: var(--gold-300);
-        transform: scale(1.25);
-    }
-
-    .hero__dot:hover:not(.hero__dot--active) {
-        background: rgba(255, 255, 255, 0.4);
-    }
-
-    .hero__image-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-            180deg,
-            transparent 40%,
-            rgba(10, 10, 10, 0.6) 100%
-        );
-        pointer-events: none;
-    }
-
-    .hero__image-border {
-        position: absolute;
-        inset: 0;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        pointer-events: none;
-        transition: border-color var(--transition-base);
-    }
-
-    .hero__image-frame:hover .hero__image-border {
-        border-color: rgba(212, 175, 55, 0.35);
-    }
-
-    /* Floating decorative elements */
-    .hero__float {
-        position: absolute;
-        z-index: 3;
-        pointer-events: none;
-    }
-
-    .hero__float--1 {
-        top: -10px;
-        right: 5%;
-        font-size: 1.2rem;
-        color: var(--gold-300);
-        filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
-        animation: floatBounce 4s ease-in-out infinite;
-    }
-
-    .hero__float--2 {
-        bottom: 15%;
-        left: -5%;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        animation: floatBounce 5s ease-in-out infinite reverse;
-    }
-
-    @keyframes floatBounce {
-        0%,
-        100% {
-            transform: translateY(0) rotate(0deg);
-        }
-        50% {
-            transform: translateY(-15px) rotate(5deg);
-        }
     }
 
     /* ─── Scroll Indicator ─── */
@@ -840,49 +391,23 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
     }
 
     @keyframes scrollDot {
-        0% {
-            top: -10px;
-            opacity: 0;
-        }
-        25% {
-            opacity: 1;
-        }
-        100% {
-            top: 40px;
-            opacity: 0;
-        }
+        0%   { top: -10px; opacity: 0; }
+        25%  { opacity: 1; }
+        100% { top: 40px; opacity: 0; }
     }
 
     /* ─── Responsive ─── */
     @media (max-width: 768px) {
         .hero__content {
-            grid-template-columns: 1fr;
-            text-align: center;
             padding-top: 90px;
-            gap: 2.5rem;
+            padding-bottom: 60px;
         }
 
-        .hero__text {
-            align-items: center;
-            order: 2;
-        }
-
-        .hero__image-wrap {
-            order: 1;
-        }
-
-        .hero__card-line {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero__description {
-            margin-left: auto;
-            margin-right: auto;
+        .hero__title {
+            font-size: clamp(2.5rem, 10vw, 3.5rem);
         }
 
         .hero__actions {
-            justify-content: center;
             flex-direction: column;
         }
 
@@ -890,10 +415,6 @@ const heroTitle = heroContent?.title || "Tu Belleza, Tu Poder";
             width: 100%;
             max-width: 280px;
             justify-content: center;
-        }
-
-        .hero__image-frame {
-            width: clamp(220px, 65%, 320px);
         }
 
         .hero__scroll {

@@ -1,4 +1,7 @@
 images:
-  - /imgs/hero/images/0.JPG
-  - /imgs/hero/images/1.jpeg
-  - /imgs/hero/images/2.jpeg
+  - image: /imgs/hero/images/0.JPG
+    position: center
+  - image: /imgs/hero/images/1.jpeg
+    position: center
+  - image: /imgs/hero/images/2.jpeg
+    position: center

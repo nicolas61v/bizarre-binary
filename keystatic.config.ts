@@ -1,5 +1,17 @@
 import { config, fields, singleton, collection } from '@keystatic/core';
 
+const positionOptions = [
+    { label: 'Centro', value: 'center' },
+    { label: 'Arriba', value: 'top' },
+    { label: 'Abajo', value: 'bottom' },
+    { label: 'Izquierda', value: 'left' },
+    { label: 'Derecha', value: 'right' },
+    { label: 'Arriba izquierda', value: 'top left' },
+    { label: 'Arriba derecha', value: 'top right' },
+    { label: 'Abajo izquierda', value: 'bottom left' },
+    { label: 'Abajo derecha', value: 'bottom right' },
+] as const;
+
 export default config({
     storage: {
       kind: 'github',
@@ -14,10 +26,18 @@ export default config({
                 subtitle: fields.text({ label: 'Subtítulo', description: 'Texto pequeño arriba del título' }),
                 tagline: fields.text({ label: 'Frase destacada', description: 'Frase debajo del título' }),
                 images: fields.array(
-                    fields.image({
-                        label: 'Foto',
-                        directory: 'public/imgs/hero',
-                        publicPath: '/imgs/hero/',
+                    fields.object({
+                        image: fields.image({
+                            label: 'Foto',
+                            directory: 'public/imgs/hero',
+                            publicPath: '/imgs/hero/',
+                        }),
+                        position: fields.select({
+                            label: 'Recorte / Posición',
+                            description: 'Elige qué parte de la foto queda visible',
+                            options: positionOptions,
+                            defaultValue: 'center',
+                        }),
                     }),
                     {
                         label: 'Fotos del Carrusel',
@@ -54,6 +74,12 @@ export default config({
                     label: 'Imagen del Beneficio',
                     directory: 'public/imgs/benefits',
                     publicPath: '/imgs/benefits/',
+                }),
+                position: fields.select({
+                    label: 'Recorte / Posición',
+                    description: 'Elige qué parte de la foto queda visible',
+                    options: positionOptions,
+                    defaultValue: 'center',
                 }),
             },
         }),
